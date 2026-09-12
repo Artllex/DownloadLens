@@ -1,8 +1,10 @@
-# Download Router 1.2.6
+# Download Router 1.2.7
 
 By Arkadiusz Pajda (Artllex), 2026.
 
 ## Highlights
+- Settings load immediately without waiting for the native support component. Folder suggestions update in the background without overwriting saved values or ongoing edits.
+- Defensive handling of incomplete native responses, with regression tests for delayed responses and newly added rules.
 - Fresh support installations use the current user's Windows Downloads known folder, including redirected locations, for ChatGPT conversation folders.
 - Settings suggest real local paths rather than hard-coded examples. Missing or older support leaves suggestions empty.
 - Existing folder settings and routing rules remain unchanged.
@@ -13,7 +15,7 @@ By Arkadiusz Pajda (Artllex), 2026.
 - Compact Polish and English settings, automatic Firefox language selection, and author links to GitHub and LinkedIn.
 
 ## Included downloads
-- **Download-Router-1.2.6.xpi**: Firefox extension.
+- **Download-Router-1.2.7.xpi**: Firefox extension.
 - **Download-Router-Support-Setup-1.2.1.exe**: Windows support installer with native path synchronization, ZIP extraction and confirmed file deletion in the downloads panel and Library.
 
 ## Installation

@@ -192,14 +192,22 @@ async function save() {
   statusElement.textContent = text.saved;
 }
 
-async function restore() {
+async function refreshFolderSuggestions() {
   try {
     const defaults = await api.runtime.sendNativeMessage(HOST, {action: "defaultFolders"});
     if (defaults && defaults.ok) {
-      document.querySelector("#chatgptFolder").placeholder = defaults.chatgpt;
-      document.querySelector("#routeTemplate").content.querySelector(".folder").placeholder = defaults.downloads;
+      if (typeof defaults.chatgpt === "string" && defaults.chatgpt) {
+        document.querySelector("#chatgptFolder").placeholder = defaults.chatgpt;
+      }
+      if (typeof defaults.downloads === "string" && defaults.downloads) {
+        document.querySelector("#routeTemplate").content.querySelector(".folder").placeholder = defaults.downloads;
+        document.querySelectorAll(".folder").forEach(field => { field.placeholder = defaults.downloads; });
+      }
     }
   } catch (_) { /* Older or missing support: no invented filesystem paths. */ }
+}
+
+async function restore() {
   const settings = await api.storage.local.get({ routes: [], filenameRules: [], chatgptFolder: "", chatgptEnabled: true, language: "auto", lastActivity: null });
   document.querySelector("#chatgptFolder").value = settings.chatgptFolder;
   routesElement.replaceChildren();
@@ -212,6 +220,8 @@ async function restore() {
   settings.routes.forEach(addRoute);
   settings.filenameRules.forEach(addNameRule);
   refreshEmptyState();
+  // Optional native hints must never delay loading saved settings or language.
+  void refreshFolderSuggestions();
 }
 
 function readNameRules() {
