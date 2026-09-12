@@ -8,8 +8,8 @@ const api = typeof browser !== "undefined" ? browser : {
 };
 const translations = {
 pl: {
-  chatgptFolderLabel: "Folder plików ChatGPT", chatgptFolderHint: "Puste pole: użyj skonfigurowanego TEMP. Rozmowy otrzymują osobne podfoldery.",
-  chatgptFolderInvalid: "Podaj pełną ścieżkę folderu ChatGPT, np. C:\\CODE\\temp, lub pozostaw pole puste.",
+  chatgptFolderLabel: "Folder plików ChatGPT", chatgptFolderHint: "Puste pole: zapisany folder lub systemowe Pobrane. Rozmowy otrzymują osobne podfoldery.",
+  chatgptFolderInvalid: "Wybierz folder ChatGPT lub pozostaw pole puste.",
   namesTitle: "Reguły nazw plików",
   chatgptToggleLabel: "Reguła ChatGPT",
   addName: "+ Dodaj wzorzec", namesEmpty: "Nie dodano reguł nazw.",
@@ -45,8 +45,8 @@ pl: {
   hostError: "Najpierw zainstaluj ChatGPT Workspace Setup 1.2.3, aby wybierać foldery."
 },
 en: {
-  chatgptFolderLabel: "ChatGPT downloads folder", chatgptFolderHint: "Leave blank to use configured TEMP. Each conversation gets its own subfolder.",
-  chatgptFolderInvalid: "Enter a full ChatGPT folder path, e.g. C:\\CODE\\temp, or leave it blank.",
+  chatgptFolderLabel: "ChatGPT downloads folder", chatgptFolderHint: "Leave blank to use the saved folder or Windows Downloads. Each conversation gets its own subfolder.",
+  chatgptFolderInvalid: "Choose a ChatGPT folder or leave it blank.",
   namesTitle: "Filename rules",
   chatgptToggleLabel: "ChatGPT rule",
   addName: "+ Add pattern", namesEmpty: "No filename rules yet.",
@@ -193,6 +193,13 @@ async function save() {
 }
 
 async function restore() {
+  try {
+    const defaults = await api.runtime.sendNativeMessage(HOST, {action: "defaultFolders"});
+    if (defaults && defaults.ok) {
+      document.querySelector("#chatgptFolder").placeholder = defaults.chatgpt;
+      document.querySelector("#routeTemplate").content.querySelector(".folder").placeholder = defaults.downloads;
+    }
+  } catch (_) { /* Older or missing support: no invented filesystem paths. */ }
   const settings = await api.storage.local.get({ routes: [], filenameRules: [], chatgptFolder: "", chatgptEnabled: true, language: "auto", lastActivity: null });
   document.querySelector("#chatgptFolder").value = settings.chatgptFolder;
   routesElement.replaceChildren();

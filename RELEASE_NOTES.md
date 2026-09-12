@@ -1,8 +1,11 @@
-# Download Router 1.2.5
+# Download Router 1.2.6
 
 By Arkadiusz Pajda (Artllex), 2026.
 
 ## Highlights
+- Fresh support installations use the current user's Windows Downloads known folder, including redirected locations, for ChatGPT conversation folders.
+- Settings suggest real local paths rather than hard-coded examples. Missing or older support leaves suggestions empty.
+- Existing folder settings and routing rules remain unchanged.
 - New flat folder-and-download-arrow icon in all Firefox icon sizes.
 - Configurable ChatGPT download location with conversation subfolders.
 - Optional built-in ChatGPT routing rule.
@@ -10,8 +13,8 @@ By Arkadiusz Pajda (Artllex), 2026.
 - Compact Polish and English settings, automatic Firefox language selection, and author links to GitHub and LinkedIn.
 
 ## Included downloads
-- **Download-Router-1.2.5.xpi**: Firefox extension.
-- **Download-Router-Support-Setup-1.2.0.exe**: Windows support installer with native path synchronization, ZIP extraction and confirmed file deletion in the downloads panel and Library.
+- **Download-Router-1.2.6.xpi**: Firefox extension.
+- **Download-Router-Support-Setup-1.2.1.exe**: Windows support installer with native path synchronization, ZIP extraction and confirmed file deletion in the downloads panel and Library.
 
 ## Installation
 Close Firefox and install the support component. Its Firefox integration requires UAC approval. Load the XPI separately using about:debugging.

@@ -1,7 +1,7 @@
 [Setup]
 AppId=Artllex.DownloadRouter.Support
 AppName=Download Router Support
-AppVersion=1.2.0
+AppVersion=1.2.1
 AppPublisher=Arkadiusz Pajda (Artllex)
 AppPublisherURL=https://github.com/Artllex/download-router
 DefaultDirName={localappdata}\Programs\DownloadRouterSupport
@@ -13,7 +13,7 @@ MinVersion=10.0
 WizardStyle=modern
 LanguageDetectionMethod=none
 OutputDir=..\dist
-OutputBaseFilename=Download-Router-Support-Setup-1.2.0
+OutputBaseFilename=Download-Router-Support-Setup-1.2.1
 Compression=lzma2
 SolidCompression=yes
 CloseApplications=no
@@ -87,10 +87,6 @@ begin
     if not FileExists(Settings) then begin
       if FileExists(Legacy) then begin
         if not FileCopy(Legacy, Settings, False) then RaiseException('Cannot import folder settings.');
-      end else begin
-        Temp := ExpandConstant('{localappdata}\DownloadRouter\temp');
-        if not ForceDirectories(Temp) then RaiseException('Cannot create TEMP directory.');
-        if not SaveStringToFile(Settings, '<Folders><Temp>' + Escape(Temp, False) + '</Temp></Folders>', False) then RaiseException('Cannot save settings.');
       end;
     end;
     Manifest := '{"name":"com.artllex.download_router","description":"Download Router Support","path":"' +

@@ -64,8 +64,24 @@ static class FirefoxDownloadHost {
         return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Programs","ChatGPTFolderLauncher","sync-requests");
     }
 
+    [DllImport("shell32.dll", CharSet=CharSet.Unicode)]
+    static extern int SHGetKnownFolderPath(ref Guid id, uint flags, IntPtr token, out IntPtr path);
+
+    static string DownloadsFolder() {
+        Guid id=new Guid("374DE290-123F-4565-9164-39C4925E467B");
+        IntPtr path;
+        int result=SHGetKnownFolderPath(ref id,0,IntPtr.Zero,out path);
+        if(result!=0) Marshal.ThrowExceptionForHR(result);
+        try {
+            string folder=Marshal.PtrToStringUni(path);
+            if(String.IsNullOrWhiteSpace(folder) || !Directory.Exists(folder)) throw new IOException("Windows Downloads folder is unavailable.");
+            return folder;
+        } finally { Marshal.FreeCoTaskMem(path); }
+    }
+
     static string ConfiguredTemp() {
         string settings=Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"folders.xml");
+        if(!File.Exists(settings)) return DownloadsFolder();
         string temp=(string)XDocument.Load(settings).Root.Element("Temp");
         if(String.IsNullOrWhiteSpace(temp) || !Path.IsPathRooted(temp)) throw new IOException("The configured TEMP folder is invalid.");
         return Path.GetFullPath(temp);
@@ -187,7 +203,9 @@ static class FirefoxDownloadHost {
         try {
             var message=json.Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(data,0,offset));
             string action=message.ContainsKey("action") ? Convert.ToString(message["action"]) : "move";
-            if(String.Equals(action,"chooseFolder",StringComparison.OrdinalIgnoreCase))
+            if(String.Equals(action,"defaultFolders",StringComparison.OrdinalIgnoreCase))
+                response=new {ok=true,downloads=DownloadsFolder(),chatgpt=ConfiguredTemp()};
+            else if(String.Equals(action,"chooseFolder",StringComparison.OrdinalIgnoreCase))
                 response=new { ok=true, folder=ChooseFolder(message) };
             else if(String.Equals(action,"reveal",StringComparison.OrdinalIgnoreCase))
                 response=new { ok=true, path=Reveal(message) };
