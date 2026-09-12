@@ -8,6 +8,8 @@ const api = typeof browser !== "undefined" ? browser : {
 };
 const translations = {
 pl: {
+  chatgptFolderLabel: "Folder plików ChatGPT", chatgptFolderHint: "Puste pole: użyj skonfigurowanego TEMP. Rozmowy otrzymują osobne podfoldery.",
+  chatgptFolderInvalid: "Podaj pełną ścieżkę folderu ChatGPT, np. C:\\CODE\\temp, lub pozostaw pole puste.",
   namesTitle: "Reguły nazw plików",
   chatgptToggleLabel: "Reguła ChatGPT",
   addName: "+ Dodaj wzorzec", namesEmpty: "Nie dodano reguł nazw.",
@@ -19,7 +21,7 @@ pl: {
   languageLabel: "Język",
   languageAuto: "Automatycznie (Firefox)",
   chatgptTitle: "Wbudowana reguła rozmów",
-  chatgptDescription: "Zapisuj w TEMP, w folderach nazwanych jak rozmowy.",
+  chatgptDescription: "Zapisuj pliki w folderach nazwanych jak rozmowy.",
   routesTitle: "Pozostałe portale",
   routesDescription: "Dodaj domenę i folder docelowy. Reguła obejmie również jej subdomeny.",
   diagnosticsTitle: "Stan rozszerzenia",
@@ -43,6 +45,8 @@ pl: {
   hostError: "Najpierw zainstaluj ChatGPT Workspace Setup 1.2.3, aby wybierać foldery."
 },
 en: {
+  chatgptFolderLabel: "ChatGPT downloads folder", chatgptFolderHint: "Leave blank to use configured TEMP. Each conversation gets its own subfolder.",
+  chatgptFolderInvalid: "Enter a full ChatGPT folder path, e.g. C:\\CODE\\temp, or leave it blank.",
   namesTitle: "Filename rules",
   chatgptToggleLabel: "ChatGPT rule",
   addName: "+ Add pattern", namesEmpty: "No filename rules yet.",
@@ -54,7 +58,7 @@ en: {
   languageLabel: "Language",
   languageAuto: "Automatic (Firefox)",
   chatgptTitle: "Built-in conversation rule",
-  chatgptDescription: "Save to TEMP, in folders named after conversations.",
+  chatgptDescription: "Save files in folders named after conversations.",
   routesTitle: "Other websites",
   routesDescription: "Add a domain and destination folder. Its subdomains are included automatically.",
   diagnosticsTitle: "Extension status",
@@ -86,6 +90,8 @@ const emptyElement = document.querySelector("#emptyState");
 const statusElement = document.querySelector("#status");
 
 function applyText() {
+  for (const id of ["chatgptFolderLabel", "chatgptFolderHint"]) document.getElementById(id).textContent = text[id];
+  document.getElementById("chatgptBrowse").textContent = text.browse;
   for (const id of ["namesTitle", "chatgptToggleLabel", "addName", "namesEmpty", "previewLabel"]) document.getElementById(id).textContent = text[id];
   for (const row of document.querySelectorAll(".name-rule")) translateNameRow(row);
   updatePreview();
@@ -166,6 +172,8 @@ function addRoute(route = {}) {
 }
 
 async function save() {
+  const chatgptFolder = document.querySelector("#chatgptFolder").value.trim();
+  if (chatgptFolder && !/^[a-z]:\\/i.test(chatgptFolder)) { statusElement.textContent = text.chatgptFolderInvalid; return; }
   const filenameRules = readNameRules();
   if (!filenameRules.every(rule => rule.pattern && rule.pattern.length <= 255 && !/[\\/:]/.test(rule.pattern) && /^[a-z]:\\/i.test(rule.folder))) {
     statusElement.textContent = text.invalidName;
@@ -180,12 +188,13 @@ async function save() {
     statusElement.textContent = text.invalid;
     return;
   }
-  await api.storage.local.set({ routes, filenameRules, chatgptEnabled: document.querySelector("#chatgptEnabled").checked, language: document.querySelector("#language").value });
+  await api.storage.local.set({ routes, filenameRules, chatgptFolder, chatgptEnabled: document.querySelector("#chatgptEnabled").checked, language: document.querySelector("#language").value });
   statusElement.textContent = text.saved;
 }
 
 async function restore() {
-  const settings = await api.storage.local.get({ routes: [], filenameRules: [], chatgptEnabled: true, language: "auto", lastActivity: null });
+  const settings = await api.storage.local.get({ routes: [], filenameRules: [], chatgptFolder: "", chatgptEnabled: true, language: "auto", lastActivity: null });
+  document.querySelector("#chatgptFolder").value = settings.chatgptFolder;
   routesElement.replaceChildren();
   document.querySelector("#nameRules").replaceChildren();
   document.querySelector("#chatgptEnabled").checked = settings.chatgptEnabled;
@@ -268,6 +277,14 @@ function addNameRule(rule = {}) {
 document.querySelector("#addName").addEventListener("click", () => addNameRule());
 document.querySelector("#previewName").addEventListener("input", updatePreview);
 document.querySelector("#addRoute").addEventListener("click", () => addRoute());
+document.querySelector("#chatgptBrowse").addEventListener("click", async () => {
+  try {
+    const field = document.querySelector("#chatgptFolder");
+    const result = await api.runtime.sendNativeMessage(HOST, {action:"chooseFolder", initialFolder:field.value});
+    if (!result || !result.ok) throw new Error();
+    if (result.folder) field.value = result.folder;
+  } catch (_) { statusElement.textContent = text.hostError; }
+});
 document.querySelector("#save").addEventListener("click", save);
 document.querySelector("#language").addEventListener("change", event => selectTranslation(event.target.value));
 if (api.storage.onChanged) api.storage.onChanged.addListener(changes => {

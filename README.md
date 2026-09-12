@@ -1,19 +1,28 @@
 # Download Router
 
-Firefox extension by **Arkadiusz Pajda (Artllex)**.
+Firefox extension by **Arkadiusz Pajda (Artllex), 2026**.
 
 Route downloads by filename or website, with optional ChatGPT conversation folders.
 Filename rules take priority; the first enabled match wins. Includes PL/EN settings,
 rule ordering, a matching preview and a switch for the built-in ChatGPT rule.
 
-This repository owns **only the extension**, its UI, assets, tests and XPI build.
-The Windows native host, Firefox Library/panel actions and their installer belong to
-[Firefox Enhancements](https://github.com/Artllex/firefox-zip-quick-extract).
-Install that companion to enable arbitrary local destination folders.
+This repository owns the extension **and its minimal Windows native host**.
+Install Download Router Support, then the separate XPI. Firefox Enhancements is
+not required for routing or the extension's Explorer reveal button.
+
+Support 1.2.0 includes ZIP extraction and confirmed file deletion in the native
+panel and Library, as well as its own Firefox AutoConfig module for native
+download-path synchronization and pre-collision filename capture. It adds no
+unrelated browser features and does not require Firefox Enhancements. Close Firefox
+before installation; UAC is required only for integration in its program directory.
+Another active AutoConfig is rejected without overwriting it. Keep the old
+Firefox Enhancements loader disabled; do not enable both loaders together.
+Build the support installer with
+`Build-Support.ps1 -Compiler <path-to-ISCC.exe>`. See `support/README.txt`.
 
 ## Build and test
 
-Run `Build.ps1` in PowerShell to create `dist/Download-Router-1.2.2.xpi`.
+Run `Build.ps1` in PowerShell to create `dist/Download-Router-1.2.5.xpi`.
 Run `node tests/firefox-extension.test.js` and `node tests/filename-rules.test.js`.
 The optional UI test requires Playwright and Microsoft Edge.
 

@@ -28,6 +28,8 @@ h2 { font-size: 18px; }
 header p, .section-heading p, .chatgpt-card p { color: var(--muted); margin-top: 4px; }
 section { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 22px; margin-bottom: 18px; }
 .chatgpt-card { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.chatgpt-card { flex-wrap: wrap; }
+.chatgpt-folder-field { flex-basis: 100%; min-width: 0; }
 .badge { display: inline-block; padding: 3px 9px; margin-bottom: 9px; border-radius: 999px; color: #08775e; background: #d9f5ec; font-size: 12px; font-weight: 700; }
 code { padding: 9px 12px; border-radius: 8px; background: var(--bg); white-space: nowrap; }
 .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
@@ -60,7 +62,7 @@ button { height: 40px; border-radius: 8px; padding: 0 15px; border: 1px solid tr
 .toggle-label input:checked { background: var(--accent); border-color: var(--accent); }
 .toggle-label input:checked::before { transform: translateX(16px); }
 .author { text-align: center; color: var(--muted); margin: 22px 0 10px; font-size: 13px; }
-.author span { color: var(--accent); }
+.author span { color: inherit; }
 .author a { margin-left: 14px; color: var(--accent); text-decoration: none; }
 .author a:hover { text-decoration: underline; }
 .diagnostics p { margin-top: 7px; color: var(--muted); }

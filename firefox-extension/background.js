@@ -128,8 +128,16 @@ browser.downloads.onChanged.addListener(async delta => {
     }
     const matches = await browser.downloads.search({ id: delta.id });
     if (matches.length && matches[0].filename) {
-      const settings = await browser.storage.local.get({ filenameRules: [], chatgptEnabled: true });
+      const settings = await browser.storage.local.get({ filenameRules: [], chatgptEnabled: true, chatgptFolder: "" });
       if (route && route.mode === "chatgpt" && !settings.chatgptEnabled) route = null;
+      if (route && route.mode === "chatgpt" && settings.chatgptFolder) {
+        // Keep compatibility with existing native hosts: folder mode plus the
+        // same sanitized conversation name used by the native ChatGPT route.
+        let name = route.conversation.replace(/[<>:"/\\|?*\x00-\x1f]/g, "_").trim().replace(/\.+$/, "").slice(0,100).trim();
+        if (!name) name = "ChatGPT conversation";
+        if (/^(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])$/i.test(name)) name = "_" + name;
+        route = { mode:"folder", folder:settings.chatgptFolder.replace(/[\\/]+$/, "") + "\\" + name };
+      }
       if (settings.filenameRules.some(rule => rule.enabled !== false)) {
         const original = await browser.runtime.sendNativeMessage(HOST, {
           action: "originalName", source: matches[0].filename,

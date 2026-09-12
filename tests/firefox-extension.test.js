@@ -177,6 +177,16 @@ async function run() {
   await changed.listener({id: searchedDownloadId,state:{current:'complete'}});
   assert.equal(nativeMessages.at(-1).message.mode,'chatgpt');
   console.log('ChatGPT toggle and independent filename rules: PASS');
+  values.chatgptFolder = 'D:\\Chats';
+  currentTab = {url:'https://chatgpt.com/c/custom',title:'Report: 2026 — ChatGPT'};
+  searchedDownloadId++; created.listener({id:searchedDownloadId});
+  await changed.listener({id:searchedDownloadId,state:{current:'complete'}});
+  assert.equal(nativeMessages.at(-1).message.folder,'D:\\Chats\\Report_ 2026');
+  values.filenameRules=[{pattern:'*.xlsx',folder:'D:\\Priority'}];
+  searchedDownloadId++; created.listener({id:searchedDownloadId});
+  await changed.listener({id:searchedDownloadId,state:{current:'complete'}});
+  assert.equal(nativeMessages.at(-1).message.folder,'D:\\Priority');
+  console.log('Custom ChatGPT folder and filename precedence: PASS');
 }
 
 run().catch(error => {

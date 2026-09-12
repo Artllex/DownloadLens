@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Download Router",
-  "version": "1.2.2",
+  "version": "1.2.5",
   "author": "Arkadiusz Pajda (Artllex)",
   "description": "Routes downloads from selected websites to chosen local folders, with conversation folders for ChatGPT.",
   "icons": {

@@ -3,3 +3,5 @@
 tests/*.png
 *.log
 Thumbs.db
+/support/*.exe
+/tests/support-test-*/

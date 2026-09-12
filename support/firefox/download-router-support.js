@@ -1,0 +1,4 @@
+// Download Router Support - AutoConfig bootstrap
+pref("general.config.filename", "download-router-support.cfg");
+pref("general.config.obscure_value", 0);
+pref("general.config.sandbox_enabled", false);
