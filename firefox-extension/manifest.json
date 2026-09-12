@@ -1,0 +1,48 @@
+{
+  "manifest_version": 2,
+  "name": "Download Router",
+  "version": "1.2.2",
+  "author": "Arkadiusz Pajda (Artllex)",
+  "description": "Routes downloads from selected websites to chosen local folders, with conversation folders for ChatGPT.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": [
+    "downloads",
+    "tabs",
+    "storage",
+    "nativeMessaging",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["filename-rules.js", "background.js"],
+    "persistent": true
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["capture-context.js"],
+    "run_at": "document_start"
+  }],
+  "browser_action": {
+    "default_title": "Download Router",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "download-router@artllex",
+      "strict_min_version": "109.0"
+    }
+  }
+}

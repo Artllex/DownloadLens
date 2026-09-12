@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Download Router">
+  <rect x="6" y="6" width="116" height="116" rx="28" fill="#10A37F"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M39 28v43"/>
+    <path d="M27 59l12 12 12-12"/>
+    <path d="M58 65h15V43h17"/>
+    <path d="M73 65v22h17"/>
+  </g>
+  <circle cx="97" cy="43" r="7" fill="#FFFFFF"/>
+  <circle cx="97" cy="87" r="7" fill="#FFFFFF"/>
+</svg>

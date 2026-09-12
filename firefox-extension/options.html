@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Download Router</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main>
+    <header>
+      <img class="mark" src="icons/icon-48.png" alt="">
+      <div class="title-block">
+        <h1>Download Router</h1>
+        <p id="subtitle"></p>
+      </div>
+      <label class="language-picker">
+        <span id="languageLabel"></span>
+        <select id="language">
+          <option value="auto"></option>
+          <option value="en">English</option>
+          <option value="pl">Polski</option>
+        </select>
+      </label>
+    </header>
+
+    <section>
+      <div class="section-heading">
+        <div><h2 id="namesTitle"></h2></div>
+        <button type="button" id="addName" class="secondary"></button>
+      </div>
+      <div id="nameRules" class="routes"></div>
+      <p id="namesEmpty" class="empty"></p>
+      <div class="preview-box">
+        <label><span id="previewLabel"></span><input id="previewName" type="text" placeholder="report.zip"></label>
+        <p id="previewResult" role="status"></p>
+      </div>
+    </section>
+
+    <section class="chatgpt-card">
+      <div>
+        <span class="badge">ChatGPT</span>
+        <h2 id="chatgptTitle"></h2>
+        <p id="chatgptDescription"></p>
+      </div>
+      <label class="toggle-label"><input id="chatgptEnabled" type="checkbox" role="switch"><span id="chatgptToggleLabel"></span></label>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <div>
+          <h2 id="routesTitle"></h2>
+          <p id="routesDescription"></p>
+        </div>
+        <button type="button" id="addRoute" class="secondary"></button>
+      </div>
+      <div id="routes" class="routes"></div>
+      <p id="emptyState" class="empty"></p>
+    </section>
+
+    <section class="diagnostics">
+      <div>
+        <h2 id="diagnosticsTitle"></h2>
+        <p><span id="versionLabel"></span>: <strong id="extensionVersion"></strong></p>
+        <p><span id="activityLabel"></span>: <strong id="lastActivity"></strong></p>
+        <small id="activityDetails"></small>
+      </div>
+    </section>
+
+    <footer>
+      <span id="status" role="status"></span>
+      <button type="button" id="save" class="primary"></button>
+    </footer>
+    <p class="author">Arkadiusz Pajda <span>· Artllex</span> <a href="https://github.com/Artllex" target="_blank" rel="noopener noreferrer">GitHub</a> <a href="https://www.linkedin.com/in/arkadiusz-pajda" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+  </main>
+
+  <template id="routeTemplate">
+    <div class="route">
+      <label>
+        <span class="domainLabel"></span>
+        <input class="domain" type="text" placeholder="example.com" autocomplete="off">
+      </label>
+      <label class="folder-field">
+        <span class="folderLabel"></span>
+        <span class="folder-row">
+          <input class="folder" type="text" placeholder="C:\Downloads\Example" autocomplete="off">
+          <button type="button" class="browse secondary"></button>
+        </span>
+      </label>
+      <button type="button" class="remove icon-button" aria-label="Remove">×</button>
+    </div>
+  </template>
+  <script src="filename-rules.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
