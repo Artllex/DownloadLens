@@ -7,9 +7,9 @@ Filename rules take priority by default; Advanced offers a shared priority order
 Includes PL/EN settings, combined filename/website conditions,
 and a switch for the built-in ChatGPT rule. Existing settings retain their precedence.
 
-## DownloadLens 1.3.3
+## DownloadLens 1.3.4
 
-`dist/DownloadLens-1.3.3.xpi` is unsigned; Mozilla public-listing submission is a separate process. Load temporarily through
+`dist/DownloadLens-1.3.4.xpi` is unsigned; Mozilla public-listing submission is a separate process. Load temporarily through
 Firefox `about:debugging` → This Firefox → Load Temporary Add-on, or reload the
 existing development extension. Do not uninstall the extension just to update it:
 uninstallation removes its stored settings. Existing native support is still required.
@@ -32,7 +32,7 @@ This repository owns the extension **and its Windows native host / AutoConfig in
 Install DownloadLens Support, then the separate XPI. Firefox Enhancements is
 not required for routing or the extension's Explorer reveal button.
 
-Support 1.2.4 includes ZIP extraction and confirmed file deletion in the native
+Support 1.2.5 includes ZIP extraction and confirmed file deletion in the native
 panel and Library, as well as its own Firefox AutoConfig module for native
 download-path synchronization and pre-collision filename capture. It adds no
 unrelated browser features and does not require Firefox Enhancements. Close Firefox
@@ -44,7 +44,7 @@ Build the support installer with
 
 ## Build and test
 
-Run `Build.ps1` in PowerShell to create `dist/DownloadLens-1.3.3.xpi`.
+Run `Build.ps1` in PowerShell to create `dist/DownloadLens-1.3.4.xpi`.
 Run `node tests/firefox-extension.test.js` and `node tests/filename-rules.test.js`.
 The optional UI test requires Playwright and Microsoft Edge.
 

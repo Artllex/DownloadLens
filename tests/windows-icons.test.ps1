@@ -1,7 +1,7 @@
 $ErrorActionPreference='Stop'
 Add-Type -AssemblyName System.Drawing
 $root=Split-Path $PSScriptRoot
-foreach($relative in @('support\FirefoxDownloadHost.exe','dist\DownloadLens-Support-Setup-1.2.4.exe')) {
+foreach($relative in @('support\FirefoxDownloadHost.exe','dist\DownloadLens-Support-Setup-1.2.5.exe')) {
   $icon=[System.Drawing.Icon]::ExtractAssociatedIcon((Join-Path $root $relative))
   if(!$icon) {throw "Missing icon: $relative"}
   $actual=$icon.ToBitmap()

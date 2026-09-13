@@ -1,3 +1,11 @@
+# DownloadLens 1.3.4 — cooperative Windows support
+
+- Links to DownloadLens Support 1.2.5, compatible with Firefox Enhancements 0.1.16.
+- No routing rule or extension permission changes. Existing extension identity/settings retained.
+- Installer lifecycle tests passed in both orders; both configurations started in isolated Firefox 155.0.1.
+- Full user-profile acceptance of hotkey, ZIP actions and routing remains unverified.
+- Firefox must be closed for support upgrades. Do not restore old disabled AutoConfig files.
+
 # DownloadLens 1.3.3 — Windows icon correction
 
 - Embeds the original DownloadLens artwork in the Support 1.2.4 installer and native host, with a multi-resolution ICO and installed-app icon.

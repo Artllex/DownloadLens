@@ -1,10 +1,10 @@
-# Signing candidate 1.3.3
+# Signing candidate 1.3.4
 
 GitHub publication and Mozilla signing/public listing are separate. Do not describe the unsigned build as Mozilla-approved.
 
 ## Files
-- `dist/DownloadLens-1.3.3.xpi` — upload as the extension.
-- `dist/DownloadLens-1.3.3-review-source.zip` — source and companion implementation for review.
+- `dist/DownloadLens-1.3.4.xpi` — upload as the extension.
+- `dist/DownloadLens-1.3.4-review-source.zip` — source and companion implementation for review.
 - `PRIVACY.md` — privacy text to supply in the submission.
 - `AMO_REVIEWER_NOTES.md` — paste into reviewer notes; disclose AutoConfig explicitly.
 

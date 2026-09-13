@@ -1,13 +1,15 @@
 DownloadLens Support - Arkadiusz Pajda (Artllex)
 
-DownloadLens Support 1.2.4: host, path synchronization and download actions.
+DownloadLens Support 1.2.5: host, path synchronization and download actions.
 Install the extension XPI separately. ZIP extraction and confirmed permanent
 deletion are available in both the downloads panel and Library, in this order:
 extract, delete, native folder action. Missing files have no extract/delete buttons.
 No hidden-profile, global hotkey or unrelated menu features are installed.
 
-Firefox Enhancements is NOT required. Keep its old loader .disabled. Another
-active AutoConfig is rejected without overwriting it. Do not enable two loaders.
+Firefox Enhancements is NOT required. FE 0.1.16 and later can coexist through
+cooperative AutoConfig v1. Each product loads the other once, only when its own
+preference file is active. Disabled loaders are never reactivated. Old FE must
+remain disabled until upgraded; unrelated AutoConfig remains blocked.
 Close Firefox for install/uninstall. UAC applies only to the Firefox module.
 Private downloads are not synchronized through the persistent queue. Without
 captured original-name metadata, the current name is retained; no suffix guessing.

@@ -43,7 +43,15 @@ if ($Action -eq 'Remove') {
 }
 # A disabled *.js.disabled loader is intentionally ignored. Never reactivate it.
 $conflicts=Get-ChildItem -LiteralPath $prefDir -Filter '*.js' -File -ErrorAction SilentlyContinue | Where-Object {
-  $_.Name -ne 'download-router-support.js' -and (Select-String -LiteralPath $_.FullName -Pattern 'general\.config\.filename' -Quiet)
+  if ($_.Name -eq 'download-router-support.js') {return $false}
+  if (!(Select-String -LiteralPath $_.FullName -Pattern 'general\.config\.filename' -Quiet)) {return $false}
+  if ($_.Name -eq 'zipquickextract-autoconfig.js') {
+    $peerCfg=Join-Path $FirefoxDirectory 'zipquickextract.cfg'
+    if ((Test-Path -LiteralPath $peerCfg) -and
+        ([IO.File]::ReadAllText($peerCfg).Contains('// Artllex cooperative AutoConfig v1')) -and
+        ([IO.File]::ReadAllText($_.FullName).Contains('pref("general.config.filename", "zipquickextract.cfg");'))) {return $false}
+  }
+  return $true
 }
 if ($conflicts) {throw ('Another AutoConfig is active. No files changed: '+($conflicts.FullName -join ', '))}
 foreach($file in $files) {
