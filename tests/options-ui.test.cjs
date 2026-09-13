@@ -25,7 +25,7 @@ const assert = require('assert');
   assert.equal(await page.locator('.about-links a').count(),3);
   assert.equal(await page.locator('#previewName, #previewDomain, .preview-box').count(),0);
   assert.equal(await page.locator('#supportDownload').innerText(),'Download Windows installer');
-  assert.match(await page.locator('#supportDownload').getAttribute('href'),/^https:\/\/github.com\/Artllex\/download-router\/releases\/download\/v1\.3\.4\/.*\.exe$/);
+  assert.match(await page.locator('#supportDownload').getAttribute('href'),/^https:\/\/github.com\/Artllex\/DownloadLens\/releases\/download\/v1\.3\.4\/.*\.exe$/);
   assert.match(await page.locator('#supportDescription').innerText(),/Required/);
   let rows = page.locator('.name-rule');
   await rows.nth(0).locator('.domain').fill('*.zip');

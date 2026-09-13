@@ -2,6 +2,14 @@
 
 Firefox extension by **Arkadiusz Pajda (Artllex), 2026**.
 
+Canonical repository: https://github.com/Artllex/DownloadLens
+
+The legacy extension ID `download-router@artllex`, native-host names and
+AutoConfig ownership markers are intentionally retained for upgrade compatibility.
+They are internal identifiers, not the product name. Previously published 1.3.4
+packages retain their original bytes and checksums; their old GitHub links redirect
+to this renamed repository. Source links on the main branch use the new URL.
+
 Route downloads by filename or website, with optional ChatGPT conversation folders.
 Filename rules take priority by default; Advanced offers a shared priority order.
 Includes PL/EN settings, combined filename/website conditions,
@@ -37,8 +45,8 @@ panel and Library, as well as its own Firefox AutoConfig module for native
 download-path synchronization and pre-collision filename capture. It adds no
 unrelated browser features and does not require Firefox Enhancements. Close Firefox
 before installation; UAC is required only for integration in its program directory.
-Another active AutoConfig is rejected without overwriting it. Keep the old
-Firefox Enhancements loader disabled; do not enable both loaders together.
+Firefox Enhancements 0.1.16 can run alongside Support 1.2.5 using cooperative
+loaders. Unknown or incompatible AutoConfig is rejected without overwriting it.
 Build the support installer with
 `Build-Support.ps1 -Compiler <path-to-ISCC.exe>`. See `support/README.txt`.
 

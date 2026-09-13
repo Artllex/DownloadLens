@@ -12,7 +12,7 @@ Existing settings and extension/native-host identifiers are preserved. The exten
 ## Validation and limitations
 Install, update and uninstall passed in both orders. An isolated Firefox 155.0.1 started both configurations. Full acceptance of hotkeys, ZIP and download routing in the user's real profile remains unverified.
 
-Windows Support uses privileged AutoConfig and Native Messaging, disables the AutoConfig sandbox (not web-content sandboxing), and operates independently of extension consent/removal. It is not signed or approved by Mozilla. See [Privacy](https://github.com/Artllex/download-router/blob/main/PRIVACY.md). Unknown AutoConfig remains blocked.
+Windows Support uses privileged AutoConfig and Native Messaging, disables the AutoConfig sandbox (not web-content sandboxing), and operates independently of extension consent/removal. It is not signed or approved by Mozilla. See [Privacy](https://github.com/Artllex/DownloadLens/blob/main/PRIVACY.md). Unknown AutoConfig remains blocked.
 
 ## Assets and SHA256
 The release includes the unsigned XPI, required Windows installer, readable reviewer source and SHA256SUMS.txt. Mozilla signing changes the XPI checksum; the signed artifact is not yet available here.

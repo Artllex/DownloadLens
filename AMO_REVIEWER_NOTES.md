@@ -6,7 +6,7 @@ Support 1.2.5 adds cooperative AutoConfig v1 with optional Firefox Enhancements 
 
 ## Important architecture disclosure
 
-The extension requires the separately installed Windows support component. DownloadLens Support 1.2.5 is included in https://github.com/Artllex/download-router/releases/tag/v1.3.4 . Direct installer: https://github.com/Artllex/download-router/releases/download/v1.3.4/DownloadLens-Support-Setup-1.2.5.exe . The installer is not contained in the XPI and is not signed by Mozilla.
+The extension requires the separately installed Windows support component. DownloadLens Support 1.2.5 is included in https://github.com/Artllex/DownloadLens/releases/tag/v1.3.4 . Direct installer: https://github.com/Artllex/DownloadLens/releases/download/v1.3.4/DownloadLens-Support-Setup-1.2.5.exe . The installer is not contained in the XPI and is not signed by Mozilla.
 
 Support includes BOTH a Native Messaging host AND privileged AutoConfig integration installed in Firefox's application directory through a UAC-approved helper. It disables the AutoConfig sandbox with `general.config.sandbox_enabled=false`; it does not disable extension signature checks or the web-content sandbox. AutoConfig accesses internal Downloads/DownloadHistory APIs, records original public-download names, updates moved-file paths and adds ZIP extraction/deletion controls to the browser panel and Library.
 
