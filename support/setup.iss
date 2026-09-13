@@ -1,7 +1,7 @@
 [Setup]
 AppId=Artllex.DownloadRouter.Support
 AppName=DownloadLens Support
-AppVersion=1.2.5
+AppVersion=1.2.6
 SetupIconFile=..\assets\DownloadLens.ico
 UninstallDisplayIcon={app}\FirefoxDownloadHost.exe
 AppPublisher=Arkadiusz Pajda (Artllex)
@@ -15,7 +15,7 @@ MinVersion=10.0
 WizardStyle=modern
 LanguageDetectionMethod=none
 OutputDir=..\dist
-OutputBaseFilename=DownloadLens-Support-Setup-1.2.5
+OutputBaseFilename=DownloadLens-Support-Setup-1.2.6
 Compression=lzma2
 SolidCompression=yes
 CloseApplications=no
@@ -28,6 +28,7 @@ Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
 Source: "FirefoxDownloadHost.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "README.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Configure-Firefox.ps1"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Shared-AutoConfig.ps1"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Run-Firefox-Configuration.ps1"; DestDir: "{app}"; Flags: ignoreversion
 Source: "firefox\*"; DestDir: "{app}\firefox"; Flags: ignoreversion
 [Code]

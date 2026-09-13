@@ -6,7 +6,7 @@ Canonical repository: https://github.com/Artllex/DownloadLens
 
 The legacy extension ID `download-router@artllex`, native-host names and
 AutoConfig ownership markers are intentionally retained for upgrade compatibility.
-They are internal identifiers, not the product name. Previously published 1.3.4
+They are internal identifiers, not the product name. Previously published 1.3.5
 packages retain their original bytes and checksums; their old GitHub links redirect
 to this renamed repository. Source links on the main branch use the new URL.
 
@@ -15,9 +15,9 @@ Filename rules take priority by default; Advanced offers a shared priority order
 Includes PL/EN settings, combined filename/website conditions,
 and a switch for the built-in ChatGPT rule. Existing settings retain their precedence.
 
-## DownloadLens 1.3.4
+## DownloadLens 1.3.5
 
-`dist/DownloadLens-1.3.4.xpi` is unsigned; Mozilla public-listing submission is a separate process. Load temporarily through
+`dist/DownloadLens-1.3.5.xpi` is unsigned; Mozilla public-listing submission is a separate process. Load temporarily through
 Firefox `about:debugging` → This Firefox → Load Temporary Add-on, or reload the
 existing development extension. Do not uninstall the extension just to update it:
 uninstallation removes its stored settings. Existing native support is still required.
@@ -40,19 +40,19 @@ This repository owns the extension **and its Windows native host / AutoConfig in
 Install DownloadLens Support, then the separate XPI. Firefox Enhancements is
 not required for routing or the extension's Explorer reveal button.
 
-Support 1.2.5 includes ZIP extraction and confirmed file deletion in the native
+Support 1.2.6 includes ZIP extraction and confirmed file deletion in the native
 panel and Library, as well as its own Firefox AutoConfig module for native
 download-path synchronization and pre-collision filename capture. It adds no
 unrelated browser features and does not require Firefox Enhancements. Close Firefox
 before installation; UAC is required only for integration in its program directory.
-Firefox Enhancements 0.1.16 can run alongside Support 1.2.5 using cooperative
+Firefox Enhancements 0.1.18 can run alongside Support 1.2.6 using cooperative
 loaders. Unknown or incompatible AutoConfig is rejected without overwriting it.
 Build the support installer with
 `Build-Support.ps1 -Compiler <path-to-ISCC.exe>`. See `support/README.txt`.
 
 ## Build and test
 
-Run `Build.ps1` in PowerShell to create `dist/DownloadLens-1.3.4.xpi`.
+Run `Build.ps1` in PowerShell to create `dist/DownloadLens-1.3.5.xpi`.
 Run `node tests/firefox-extension.test.js` and `node tests/filename-rules.test.js`.
 The optional UI test requires Playwright and Microsoft Edge.
 
@@ -71,3 +71,4 @@ New changes and extension releases belong here. The original repository and its
 published history are not deleted or rewritten.
 
 MIT license. [GitHub](https://github.com/Artllex) · [LinkedIn](https://www.linkedin.com/in/arkadiusz-pajda)
+

@@ -17,65 +17,7 @@ if (!$FirefoxDirectory -or !(Test-Path -LiteralPath (Join-Path $FirefoxDirectory
 $FirefoxDirectory=[IO.Path]::GetFullPath($FirefoxDirectory)
 if ($CheckOnly) { Write-Output "Firefox detected: $FirefoxDirectory"; return }
 if (Get-Process firefox -ErrorAction SilentlyContinue) {throw 'Close all Firefox windows before changing integration.'}
-$prefDir=Join-Path $FirefoxDirectory 'defaults\pref'
-$statePath=Join-Path $FirefoxDirectory 'download-router-support-state.json'
-$files=@(
-  @{name='download-router-actions.sys.mjs';path=(Join-Path $FirefoxDirectory 'download-router-actions.sys.mjs')},
-  @{name='download-router-extract.ps1';path=(Join-Path $FirefoxDirectory 'download-router-extract.ps1')},
-  @{name='download-router-extract.vbs';path=(Join-Path $FirefoxDirectory 'download-router-extract.vbs')},
-  @{name='download-router-support.cfg';path=(Join-Path $FirefoxDirectory 'download-router-support.cfg')},
-  @{name='download-router-sync.sys.mjs';path=(Join-Path $FirefoxDirectory 'download-router-sync.sys.mjs')},
-  @{name='download-router-support.js';path=(Join-Path $prefDir 'download-router-support.js')}
-)
-if ($Action -eq 'Remove') {
-  if (!(Test-Path -LiteralPath $statePath)) {return}
-  $state=Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json
-  if ($state.owner -ne 'DownloadRouterSupport') {throw 'Unknown integration ownership.'}
-  foreach($file in $files) {
-    if(Test-Path -LiteralPath $file.path) {
-      $expected=$state.hashes.($file.name)
-      if (!$expected -or (Get-FileHash -LiteralPath $file.path).Hash -ne $expected) {throw "Integration file changed; kept for safety: $($file.path)"}
-    }
-  }
-  foreach($file in $files) {if(Test-Path -LiteralPath $file.path) {Remove-Item -LiteralPath $file.path}}
-  Remove-Item -LiteralPath $statePath
-  return
-}
-# A disabled *.js.disabled loader is intentionally ignored. Never reactivate it.
-$conflicts=Get-ChildItem -LiteralPath $prefDir -Filter '*.js' -File -ErrorAction SilentlyContinue | Where-Object {
-  if ($_.Name -eq 'download-router-support.js') {return $false}
-  if (!(Select-String -LiteralPath $_.FullName -Pattern 'general\.config\.filename' -Quiet)) {return $false}
-  if ($_.Name -eq 'zipquickextract-autoconfig.js') {
-    $peerCfg=Join-Path $FirefoxDirectory 'zipquickextract.cfg'
-    if ((Test-Path -LiteralPath $peerCfg) -and
-        ([IO.File]::ReadAllText($peerCfg).Contains('// Artllex cooperative AutoConfig v1')) -and
-        ([IO.File]::ReadAllText($_.FullName).Contains('pref("general.config.filename", "zipquickextract.cfg");'))) {return $false}
-  }
-  return $true
-}
-if ($conflicts) {throw ('Another AutoConfig is active. No files changed: '+($conflicts.FullName -join ', '))}
-foreach($file in $files) {
-  if ((Test-Path -LiteralPath $file.path) -and !(Get-Content -LiteralPath $file.path -TotalCount 1).Contains('Download Router Support')) {throw "Refusing to replace an unrelated file: $($file.path)"}
-}
-New-Item -ItemType Directory -Path $prefDir -Force | Out-Null
-$backup=Join-Path $FirefoxDirectory ('download-router-backup-'+(Get-Date -Format 'yyyyMMdd-HHmmss-fff'))
-$written=@(); $saved=@()
-try {
-  foreach($file in $files) {
-    if (Test-Path -LiteralPath $file.path) {
-      New-Item -ItemType Directory -Path $backup -Force | Out-Null
-      Copy-Item -LiteralPath $file.path -Destination (Join-Path $backup $file.name)
-      $saved += $file
-    }
-    Copy-Item -LiteralPath (Join-Path $PSScriptRoot ('firefox\'+$file.name)) -Destination $file.path -Force
-    $written += $file
-  }
-  $hashes=@{}; foreach($file in $files){$hashes[$file.name]=(Get-FileHash -LiteralPath $file.path).Hash}
-  @{owner='DownloadRouterSupport';hashes=$hashes} | ConvertTo-Json | Set-Content -LiteralPath $statePath -Encoding UTF8
-} catch {
-  foreach($file in $written) {
-    if($saved.name -contains $file.name) {Copy-Item -LiteralPath (Join-Path $backup $file.name) -Destination $file.path -Force}
-    else {Remove-Item -LiteralPath $file.path -ErrorAction SilentlyContinue}
-  }
-  throw
-}
+. (Join-Path $PSScriptRoot 'Shared-AutoConfig.ps1')
+$sources=@{}
+foreach($name in @('download-router-support.cfg','download-router-sync.sys.mjs','download-router-actions.sys.mjs','download-router-extract.ps1','download-router-extract.vbs')) {$sources[$name]=Join-Path $PSScriptRoot ('firefox/'+$name)}
+Invoke-ArtllexAutoConfig -Root $FirefoxDirectory -Product DL -Action $Action -Sources $sources

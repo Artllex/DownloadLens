@@ -1,12 +1,12 @@
-# Mozilla reviewer notes — DownloadLens 1.3.4
+# Mozilla reviewer notes — DownloadLens 1.3.5
 
 Requested channel: public AMO listing. Windows desktop only. Extension ID: `download-router@artllex`. License: MIT. Author: Arkadiusz Pajda (Artllex).
 
-Support 1.2.5 adds cooperative AutoConfig v1 with optional Firefox Enhancements 0.1.16. Each active configuration can load the other through a local resource URI, with per-product guards preventing duplicate startup. Disabling/removing a product's preference file stops peer loading of that product. No remote code is fetched. Firefox Enhancements is optional and not shipped inside this XPI or support package. Unknown and incompatible older AutoConfig remain rejected. Installer lifecycle tests passed in both orders and isolated Firefox 155.0.1 loaded both configurations; full user-profile hotkey/download/ZIP acceptance remains unverified. Do not interpret startup flags as full functional validation.
+Support 1.2.6 uses one shared AutoConfig dispatcher with optional Firefox Enhancements 0.1.18. Both packages work alone or in either installation order. Recognized configurations are migrated with backups; disabled modules remain disabled. Unknown or modified configurations are preserved. No remote code is fetched. Automated lifecycle and rollback tests passed; interactive user-profile acceptance remains pending.
 
 ## Important architecture disclosure
 
-The extension requires the separately installed Windows support component. DownloadLens Support 1.2.5 is included in https://github.com/Artllex/DownloadLens/releases/tag/v1.3.4 . Direct installer: https://github.com/Artllex/DownloadLens/releases/download/v1.3.4/DownloadLens-Support-Setup-1.2.5.exe . The installer is not contained in the XPI and is not signed by Mozilla.
+The extension requires the separately installed Windows support component. DownloadLens Support 1.2.6 is included in https://github.com/Artllex/DownloadLens/releases/tag/v1.3.5 . Direct installer: https://github.com/Artllex/DownloadLens/releases/download/v1.3.5/DownloadLens-Support-Setup-1.2.6.exe . The installer is not contained in the XPI and is not signed by Mozilla.
 
 Support includes BOTH a Native Messaging host AND privileged AutoConfig integration installed in Firefox's application directory through a UAC-approved helper. It disables the AutoConfig sandbox with `general.config.sandbox_enabled=false`; it does not disable extension signature checks or the web-content sandbox. AutoConfig accesses internal Downloads/DownloadHistory APIs, records original public-download names, updates moved-file paths and adds ZIP extraction/deletion controls to the browser panel and Library.
 
@@ -20,7 +20,7 @@ Permissions: contextMenus for the explicit Save to command; downloads to observe
 
 ## Build
 
-The included `firefox-extension` files are the XPI's readable source without preprocessing. On Windows PowerShell run `./Build.ps1` to archive them into `dist/DownloadLens-1.3.4.xpi`.
+The included `firefox-extension` files are the XPI's readable source without preprocessing. On Windows PowerShell run `./Build.ps1` to archive them into `dist/DownloadLens-1.3.5.xpi`.
 
 Support source is included separately under `support`. Build using Windows .NET Framework C# compiler and Inno Setup: `./Build-Support.ps1 -Compiler <path-to-ISCC.exe>`. This compiles the native host and builds the installer. Icons are already supplied; no image generation step is required. `Render-Icons.cjs` is an optional development asset tool, not required for rebuilding the XPI.
 
@@ -38,3 +38,5 @@ Support source is included separately under `support`. Build using Windows .NET 
 ## Validation boundaries
 
 Automated tests use mocked extension APIs and Edge for HTML UI. They do not prove Mozilla signing, installation consent prompts in release Firefox, or AMO policy acceptance. AutoConfig has prior isolated-Firefox integration tests, but submission is not a guarantee of compatibility with every Firefox version.
+
+
