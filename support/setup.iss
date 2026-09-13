@@ -1,7 +1,9 @@
 [Setup]
 AppId=Artllex.DownloadRouter.Support
 AppName=DownloadLens Support
-AppVersion=1.2.3
+AppVersion=1.2.4
+SetupIconFile=..\assets\DownloadLens.ico
+UninstallDisplayIcon={app}\FirefoxDownloadHost.exe
 AppPublisher=Arkadiusz Pajda (Artllex)
 AppPublisherURL=https://github.com/Artllex/download-router
 DefaultDirName={localappdata}\Programs\DownloadRouterSupport
@@ -13,7 +15,7 @@ MinVersion=10.0
 WizardStyle=modern
 LanguageDetectionMethod=none
 OutputDir=..\dist
-OutputBaseFilename=DownloadLens-Support-Setup-1.2.3
+OutputBaseFilename=DownloadLens-Support-Setup-1.2.4
 Compression=lzma2
 SolidCompression=yes
 CloseApplications=no

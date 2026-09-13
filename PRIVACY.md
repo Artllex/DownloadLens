@@ -1,6 +1,6 @@
 # DownloadLens — Privacy notice
 
-Updated 2026-09-13 for extension 1.3.2 and Windows Support 1.2.3.
+Updated 2026-09-13 for extension 1.3.3 and Windows Support 1.2.4.
 Author: Arkadiusz Pajda (Artllex). Contact: https://github.com/Artllex/download-router/issues
 
 ## Extension

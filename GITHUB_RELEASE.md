@@ -1,8 +1,11 @@
-# DownloadLens 1.3.2
+# DownloadLens 1.3.3
 
 Organize downloads by filename and website, with conversation folders for ChatGPT.
 
 ## What's new
+
+- Corrects Windows branding: both the installer and native host now embed the DownloadLens icon, including the installed-app icon.
+- Updates the direct installer link and reviewer source archive.
 
 - DownloadLens branding and the Lens icon.
 - Simple Polish/English settings with automatic language selection.
@@ -14,9 +17,9 @@ Organize downloads by filename and website, with conversation folders for ChatGP
 
 ## Downloads and installation
 
-1. **DownloadLens-Support-Setup-1.2.3.exe** — required Windows companion. Close Firefox before installing. Existing working support installations do not require reinstallation for the new rule features.
-2. **DownloadLens-1.3.2.xpi** — currently **unsigned**. Load temporarily through `about:debugging` for testing. A permanent public Firefox Add-ons release requires Mozilla review/signing, which is a separate process. Do not uninstall an existing extension merely to update it, as Firefox removes its settings on uninstall.
-3. **DownloadLens-1.3.2-review-source.zip** — readable extension and companion source for review.
+1. **DownloadLens-Support-Setup-1.2.4.exe** — required Windows companion. Close Firefox before installing. Existing working support installations do not require reinstallation for the new rule features.
+2. **DownloadLens-1.3.3.xpi** — currently **unsigned**. Load temporarily through `about:debugging` for testing. A permanent public Firefox Add-ons release requires Mozilla review/signing, which is a separate process. Do not uninstall an existing extension merely to update it, as Firefox removes its settings on uninstall.
+3. **DownloadLens-1.3.3-review-source.zip** — readable extension and companion source for review.
 
 ## Important
 

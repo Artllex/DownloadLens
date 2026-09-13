@@ -3,7 +3,7 @@ $ErrorActionPreference='Stop'
 $version=(Get-Content (Join-Path $PSScriptRoot 'firefox-extension\manifest.json') -Raw | ConvertFrom-Json).version
 $stage=Join-Path $PSScriptRoot ('dist\submission-source-'+[Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $stage | Out-Null
-foreach($folder in @('firefox-extension','support')) {
+foreach($folder in @('firefox-extension','support','assets')) {
   $source=Join-Path $PSScriptRoot $folder
   foreach($file in Get-ChildItem -LiteralPath $source -File -Recurse) {
     if($file.Extension -in @('.exe','.log') -or $file.Name -eq 'folders.xml') {continue}

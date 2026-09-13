@@ -1,6 +1,6 @@
 DownloadLens Support - Arkadiusz Pajda (Artllex)
 
-DownloadLens Support 1.2.3: host, path synchronization and download actions.
+DownloadLens Support 1.2.4: host, path synchronization and download actions.
 Install the extension XPI separately. ZIP extraction and confirmed permanent
 deletion are available in both the downloads panel and Library, in this order:
 extract, delete, native folder action. Missing files have no extract/delete buttons.

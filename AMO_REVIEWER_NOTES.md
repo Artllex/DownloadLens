@@ -1,10 +1,10 @@
-# Mozilla reviewer notes — DownloadLens 1.3.2
+# Mozilla reviewer notes — DownloadLens 1.3.3
 
 Requested channel: public AMO listing. Windows desktop only. Extension ID: `download-router@artllex`. License: MIT. Author: Arkadiusz Pajda (Artllex).
 
 ## Important architecture disclosure
 
-The extension requires the separately installed Windows support component. DownloadLens Support 1.2.3 is included in https://github.com/Artllex/download-router/releases/tag/v1.3.2 . Direct installer: https://github.com/Artllex/download-router/releases/download/v1.3.2/DownloadLens-Support-Setup-1.2.3.exe . The installer is not contained in the XPI and is not signed by Mozilla.
+The extension requires the separately installed Windows support component. DownloadLens Support 1.2.4 is included in https://github.com/Artllex/download-router/releases/tag/v1.3.3 . Direct installer: https://github.com/Artllex/download-router/releases/download/v1.3.3/DownloadLens-Support-Setup-1.2.4.exe . The installer is not contained in the XPI and is not signed by Mozilla.
 
 Support includes BOTH a Native Messaging host AND privileged AutoConfig integration installed in Firefox's application directory through a UAC-approved helper. It disables the AutoConfig sandbox with `general.config.sandbox_enabled=false`; it does not disable extension signature checks or the web-content sandbox. AutoConfig accesses internal Downloads/DownloadHistory APIs, records original public-download names, updates moved-file paths and adds ZIP extraction/deletion controls to the browser panel and Library.
 
@@ -18,7 +18,7 @@ Permissions: contextMenus for the explicit Save to command; downloads to observe
 
 ## Build
 
-The included `firefox-extension` files are the XPI's readable source without preprocessing. On Windows PowerShell run `./Build.ps1` to archive them into `dist/DownloadLens-1.3.2.xpi`.
+The included `firefox-extension` files are the XPI's readable source without preprocessing. On Windows PowerShell run `./Build.ps1` to archive them into `dist/DownloadLens-1.3.3.xpi`.
 
 Support source is included separately under `support`. Build using Windows .NET Framework C# compiler and Inno Setup: `./Build-Support.ps1 -Compiler <path-to-ISCC.exe>`. This compiles the native host and builds the installer. Icons are already supplied; no image generation step is required. `Render-Icons.cjs` is an optional development asset tool, not required for rebuilding the XPI.
 

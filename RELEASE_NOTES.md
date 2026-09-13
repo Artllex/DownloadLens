@@ -1,3 +1,9 @@
+# DownloadLens 1.3.3 — Windows icon correction
+
+- Embeds the original DownloadLens artwork in the Support 1.2.4 installer and native host, with a multi-resolution ICO and installed-app icon.
+- Updates the extension installer link and includes the ICO in the reviewer source archive.
+- Existing settings and installation identifiers are preserved.
+
 # DownloadLens 1.3.2
 
 - Removes the rule-preview form entirely; routing rules and automated tests remain unchanged.
