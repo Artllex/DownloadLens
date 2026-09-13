@@ -39,8 +39,6 @@ code { padding: 9px 12px; border-radius: 8px; background: var(--bg); white-space
 .name-controls label { display: flex; align-items: center; margin-right: auto; }
 .name-controls input { width: 18px; height: 18px; }
 button:disabled { opacity: .4; cursor: default; }
-#previewLabel { margin-top: 18px; }
-#previewResult { margin-top: 8px; overflow-wrap: anywhere; color: var(--muted); }
 .route { display: grid; grid-template-columns: minmax(170px, .7fr) minmax(280px, 1.3fr) 40px; gap: 12px; align-items: end; padding: 14px; border: 1px solid var(--border); border-radius: 12px; }
 label { display: grid; gap: 6px; color: var(--muted); font-size: 13px; font-weight: 600; }
 input { width: 100%; min-width: 0; height: 40px; padding: 0 11px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel); color: var(--text); font: inherit; }
@@ -53,9 +51,6 @@ button { height: 40px; border-radius: 8px; padding: 0 15px; border: 1px solid tr
 .secondary:hover { background: var(--bg); }
 .icon-button { width: 40px; padding: 0; color: #c33; background: transparent; border-color: var(--border); font-size: 22px; }
 .empty { padding: 8px 0; color: var(--muted); text-align: left; font-size: 14px; }
-.preview-box { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
-.preview-box #previewLabel { margin-top: 0; }
-.preview-box #previewResult:empty { display: none; }
 .toggle-label { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .toggle-label input { appearance: none; width: 42px; height: 24px; padding: 2px; border-radius: 20px; cursor: pointer; background: var(--border); }
 .toggle-label input::before { content: ''; display: block; width: 18px; height: 18px; border-radius: 50%; background: white; transition: transform .15s; }
@@ -71,6 +66,27 @@ button { height: 40px; border-radius: 8px; padding: 0 15px; border: 1px solid tr
 footer { display: flex; align-items: center; justify-content: flex-end; gap: 16px; min-height: 44px; }
 #status { color: var(--muted); margin-right: auto; }
 
+.about-card { margin-top: 24px; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); }
+.about-card summary { padding: 16px 20px; cursor: pointer; font-weight: 600; }
+.about-card summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.about-content { padding: 0 20px 20px; }
+.about-card .author { margin: 0 0 12px; text-align: left; color: var(--text); }
+.about-links { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+.about-links a { color: var(--accent); text-underline-offset: 3px; }
+.privacy-actions { margin-top: 24px; gap: 16px; }
+.privacy-card #status { margin-top: 24px; margin-bottom: 20px; }
+.advanced-card { border: 1px solid var(--border); border-radius: 16px; background: var(--panel); margin-bottom: 18px; }
+.advanced-card > summary { padding: 20px 22px; cursor: pointer; font-weight: 600; }
+.advanced-card h2 { margin-top: 24px; margin-bottom: 10px; }
+.muted, #backupStatus { color: var(--muted); font-size: 13px; margin: 12px 0; overflow-wrap: anywhere; }
+.rule-advanced { grid-column: 1 / -1; min-width: 0; }
+.rule-advanced summary { cursor: pointer; color: var(--muted); font-size: 13px; }
+.rule-advanced label { margin-top: 12px; }
+.priority-row { display: flex; align-items: center; gap: 8px; margin: 10px 0; }
+.priority-row span { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.backup-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+#importReview p { margin: 16px 0; }
+
 @media (max-width: 700px) {
   main { width: min(100% - 24px, 920px); margin-top: 20px; }
   .chatgpt-card, .section-heading { align-items: flex-start; flex-direction: column; }
@@ -80,3 +96,6 @@ footer { display: flex; align-items: center; justify-content: flex-end; gap: 16p
   .folder-field { grid-column: 1 / -1; grid-row: 2; }
   code { white-space: normal; }
 }
+.support-card p { color: var(--muted); margin-top: 10px; }
+.support-card a { display: inline-block; margin: 16px 0 12px; color: var(--accent); text-underline-offset: 3px; }
+.support-card small { display: block; color: var(--muted); }

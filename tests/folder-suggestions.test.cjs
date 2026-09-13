@@ -9,7 +9,7 @@ const assert = require('assert');
     await page.addInitScript(() => {
       window.browser = {
         i18n: { getUILanguage: () => 'en' },
-        storage: { local: { get: async defaults => ({ ...defaults, language: 'en', chatgptFolder: 'D:\\Saved', routes: [{ domain: 'example.com', folder: 'D:\\Existing' }] }) } },
+        storage: { local: { get: async defaults => ({ ...defaults, localDataConsent:{version:1,accepted:true}, language: 'en', chatgptFolder: 'D:\\Saved', routes: [{ domain: 'example.com', folder: 'D:\\Existing' }] }) } },
         runtime: { sendNativeMessage: () => new Promise(resolve => { window.resolveFolders = resolve; }) }
       };
     });

@@ -1,6 +1,6 @@
-Download Router Support - Arkadiusz Pajda (Artllex)
+DownloadLens Support - Arkadiusz Pajda (Artllex)
 
-Download Router Support 1.2.0: host, path synchronization and download actions.
+DownloadLens Support 1.2.3: host, path synchronization and download actions.
 Install the extension XPI separately. ZIP extraction and confirmed permanent
 deletion are available in both the downloads panel and Library, in this order:
 extract, delete, native folder action. Missing files have no extract/delete buttons.
@@ -14,7 +14,7 @@ captured original-name metadata, the current name is retained; no suffix guessin
 New downloads are supported. Old entries are not automatically repaired.
 
 Existing TEMP configuration is imported from the legacy host on first install.
-Otherwise TEMP is LOCALAPPDATA\DownloadRouter\temp. System TEMP is not changed.
+Without saved/imported settings, the Windows Downloads known folder is used. System TEMP is not changed.
 The optional synchronization queue retains its legacy location for compatibility.
 The old host is not removed. Reinstalling older support packages can reassign the
 native-host registration. Rerun this installer if that happens.

@@ -6,10 +6,11 @@ const fs=require('fs'),path=require('path');
   try {
     const page=await browser.newPage({deviceScaleFactor:1});
     const icons=path.join(__dirname,'firefox-extension','icons');
-    const svg=fs.readFileSync(path.join(icons,'download-router.svg'),'utf8');
+    const png=fs.readFileSync(path.join(__dirname,'assets','DownloadLens.png')).toString('base64');
     for(const size of [16,32,48,96,128]) {
       await page.setViewportSize({width:size,height:size});
-      await page.setContent(`<style>html,body{margin:0;background:transparent}svg{display:block;width:100vw;height:100vh}</style>${svg}`);
+      await page.setContent(`<style>html,body{margin:0;background:transparent}img{display:block;width:100vw;height:100vh;object-fit:contain}</style><img src="data:image/png;base64,${png}">`);
+      await page.locator('img').evaluate(image=>image.decode());
       await page.screenshot({path:path.join(icons,`icon-${size}.png`),omitBackground:true});
     }
   } finally {await browser.close()}

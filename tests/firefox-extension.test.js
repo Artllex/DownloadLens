@@ -16,7 +16,7 @@ async function run() {
   const created = event();
   const changed = event();
   const runtimeMessage = event();
-  const values = {};
+  const values = { localDataConsent: { version: 1, accepted: true } };
   const nativeMessages = [];
   let searchedDownloadId = 41;
   let tabQueryDelay = null;
@@ -44,6 +44,7 @@ async function run() {
       }
     },
     storage: {
+      onChanged: event(),
       local: {
         async set(update) { Object.assign(values, update); },
         async get(key) {
@@ -54,6 +55,7 @@ async function run() {
       }
     },
     runtime: {
+      onInstalled: event(),
       onMessage: runtimeMessage,
       async sendNativeMessage(host, message) { nativeMessages.push({ host, message }); return { ok: true, name: "Original(1).xlsx" }; },
       async openOptionsPage() {}
@@ -62,7 +64,8 @@ async function run() {
 
   const source = fs.readFileSync(path.join(__dirname, "..", "firefox-extension", "background.js"), "utf8");
   const patterns = fs.readFileSync(path.join(__dirname, "..", "firefox-extension", "filename-rules.js"), "utf8");
-  vm.runInNewContext(patterns + "\n" + source, { browser, URL, console });
+  const privacy = fs.readFileSync(path.join(__dirname, "..", "firefox-extension", "privacy.js"), "utf8");
+  vm.runInNewContext(privacy + "\n" + patterns + "\n" + source, { browser, URL, console });
 
   assert.ok(created.listener, "downloads.onCreated listener was not registered");
   assert.ok(changed.listener, "downloads.onChanged listener was not registered");
@@ -91,7 +94,8 @@ async function run() {
   currentTab = { url: "https://example.com/", title: "Unrelated page" };
   created.listener({ id: 42 });
   await new Promise(resolve => setImmediate(resolve));
-  assert.strictEqual(values["download-42"], undefined);
+  assert.strictEqual(values["download-42"].mode, undefined);
+  assert.strictEqual(values["download-42"].context.hostname, "example.com");
 
   values.routes = [{ domain: "example.org", folder: "D:\\Portal files" }];
   currentTab = { url: "https://files.example.org/report", title: "Example report" };
@@ -122,7 +126,7 @@ async function run() {
     type: "download-context",
     hostname: "chatgpt.com",
     title: "Captured before download — ChatGPT"
-  }, { tab: { id: 7 } });
+  }, { tab: { id: 7, url: "https://chatgpt.com/c/captured" } });
   searchedDownloadId = 45;
   created.listener({ id: 45 });
   await changed.listener({ id: 45, state: { current: "complete" } });

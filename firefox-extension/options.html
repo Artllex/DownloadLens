@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Download Router</title>
+  <title>DownloadLens</title>
   <link rel="stylesheet" href="options.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
     <header>
       <img class="mark" src="icons/icon-48.png" alt="">
       <div class="title-block">
-        <h1>Download Router</h1>
+        <h1>DownloadLens</h1>
         <p id="subtitle"></p>
       </div>
       <label class="language-picker">
@@ -31,10 +31,6 @@
       </div>
       <div id="nameRules" class="routes"></div>
       <p id="namesEmpty" class="empty"></p>
-      <div class="preview-box">
-        <label><span id="previewLabel"></span><input id="previewName" type="text" placeholder="report.zip"></label>
-        <p id="previewResult" role="status"></p>
-      </div>
     </section>
 
     <section class="chatgpt-card">
@@ -63,6 +59,36 @@
       <p id="emptyState" class="empty"></p>
     </section>
 
+    <details class="advanced-card">
+      <summary id="advancedTitle"></summary>
+      <div class="about-content">
+        <p id="templateHint" class="muted"></p>
+        <h2 id="priorityTitle"></h2>
+        <p id="priorityHint" class="muted"></p>
+        <div id="priorityRules"></div>
+        <button type="button" id="resetPriority" class="secondary"></button>
+        <h2 id="backupTitle"></h2>
+        <div class="backup-actions">
+          <button type="button" id="exportSettings" class="secondary"></button>
+          <button type="button" id="importSettings" class="secondary"></button>
+          <input id="importFile" type="file" accept=".json,application/json" hidden>
+        </div>
+        <div id="importReview" hidden>
+          <p id="importSummary"></p>
+          <button id="confirmImport" type="button" class="secondary"></button>
+          <button id="cancelImport" type="button" class="secondary"></button>
+        </div>
+        <p id="backupStatus" role="status"></p>
+      </div>
+    </details>
+
+    <section class="support-card">
+      <h2 id="supportTitle"></h2>
+      <p id="supportDescription"></p>
+      <a id="supportDownload" href="https://github.com/Artllex/download-router/releases/download/v1.3.2/DownloadLens-Support-Setup-1.2.3.exe" target="_blank" rel="noopener noreferrer"></a>
+      <small id="supportNote"></small>
+    </section>
+
     <section class="diagnostics">
       <div>
         <h2 id="diagnosticsTitle"></h2>
@@ -76,7 +102,17 @@
       <span id="status" role="status"></span>
       <button type="button" id="save" class="primary"></button>
     </footer>
-    <p class="author">Arkadiusz Pajda <span>· Artllex · 2026</span> <a href="https://github.com/Artllex" target="_blank" rel="noopener noreferrer">GitHub</a> <a href="https://www.linkedin.com/in/arkadiusz-pajda" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+    <details class="about-card">
+      <summary id="aboutTitle"></summary>
+      <div class="about-content">
+        <p class="author">Arkadiusz Pajda <span>· Artllex · 2026</span></p>
+        <nav class="about-links" aria-label="About">
+          <a href="https://github.com/Artllex" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/arkadiusz-pajda" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="privacy.html" id="privacyLink"></a>
+        </nav>
+      </div>
+    </details>
   </main>
 
   <template id="routeTemplate">
@@ -95,6 +131,7 @@
       <button type="button" class="remove icon-button" aria-label="Remove">×</button>
     </div>
   </template>
+  <script src="privacy.js"></script>
   <script src="filename-rules.js"></script>
   <script src="options.js"></script>
 </body>

@@ -1,7 +1,7 @@
 [Setup]
 AppId=Artllex.DownloadRouter.Support
-AppName=Download Router Support
-AppVersion=1.2.1
+AppName=DownloadLens Support
+AppVersion=1.2.3
 AppPublisher=Arkadiusz Pajda (Artllex)
 AppPublisherURL=https://github.com/Artllex/download-router
 DefaultDirName={localappdata}\Programs\DownloadRouterSupport
@@ -13,7 +13,7 @@ MinVersion=10.0
 WizardStyle=modern
 LanguageDetectionMethod=none
 OutputDir=..\dist
-OutputBaseFilename=Download-Router-Support-Setup-1.2.1
+OutputBaseFilename=DownloadLens-Support-Setup-1.2.3
 Compression=lzma2
 SolidCompression=yes
 CloseApplications=no
@@ -68,9 +68,9 @@ end;
 procedure InitializeWizard;
 begin
   if ActiveLanguage = 'polish' then
-    WizardForm.WelcomeLabel2.Caption := 'Download Router: synchronizacja pobran, rozpakowywanie ZIP i usuwanie plikow w panelu oraz Bibliotece. Zamknij Firefox. Integracja AutoConfig wymaga UAC. Rozszerzenie XPI instaluje sie osobno.'
+    WizardForm.WelcomeLabel2.Caption := 'DownloadLens: synchronizacja pobran, rozpakowywanie ZIP i usuwanie plikow w panelu oraz Bibliotece. Zamknij Firefox. Integracja AutoConfig wymaga UAC. Rozszerzenie XPI instaluje sie osobno.'
   else
-    WizardForm.WelcomeLabel2.Caption := 'Download Router: path synchronization, ZIP extraction and file deletion in the panel and Library. Close Firefox. AutoConfig integration requires UAC approval. Install the extension XPI separately.';
+    WizardForm.WelcomeLabel2.Caption := 'DownloadLens: path synchronization, ZIP extraction and file deletion in the panel and Library. Close Firefox. AutoConfig integration requires UAC approval. Install the extension XPI separately.';
 end;
 procedure CurStepChanged(CurStep: TSetupStep);
 var Settings, Legacy, Temp, Manifest: String; ResultCode: Integer; Detail: AnsiString;
@@ -89,7 +89,7 @@ begin
         if not FileCopy(Legacy, Settings, False) then RaiseException('Cannot import folder settings.');
       end;
     end;
-    Manifest := '{"name":"com.artllex.download_router","description":"Download Router Support","path":"' +
+    Manifest := '{"name":"com.artllex.download_router","description":"DownloadLens Support","path":"' +
       Escape(ExpandConstant('{app}\FirefoxDownloadHost.exe'), True) +
       '","type":"stdio","allowed_extensions":["download-router@artllex"]}';
     if not SaveStringToFile(ExpandConstant('{app}\firefox-native-host.json'), Manifest, False) then RaiseException('Cannot save manifest.');

@@ -8,14 +8,21 @@ const api = typeof browser !== "undefined" ? browser : {
 };
 const translations = {
 pl: {
+  supportTitle: "Komponent wsparcia — Windows", supportDescription: "Jest wymagany do przekierowywania plików do wybranych folderów. Dodaje też obsługę ZIP i aktualizację lokalizacji w panelu pobierania Firefoxa.", supportDownload: "Pobierz instalator Windows", supportNote: "Instalator pobierzesz z GitHuba. Jeśli komponent już działa, nie musisz go ponownie instalować. Szczegóły integracji znajdziesz w sekcji Prywatność.",
+  advancedTitle: "Zaawansowane", priorityTitle: "Kolejność reguł", priorityHint: "Pierwsza pasująca reguła wygrywa. Zmiana kolejności jest opcjonalna.",
+  templateHint: "W folderach możesz używać: {domain}, {year}, {month}.", resetPriority: "Przywróć standardową kolejność",
+  backupTitle: "Kopia ustawień", exportSettings: "Eksportuj…", importSettings: "Importuj…", confirmImport: "Wczytaj do formularza", cancelImport: "Anuluj",
+  importReady: "Reguły do wczytania: ", importWarning: ". Zastąpią formularz. Sprawdź foldery i kliknij Zapisz ustawienia. Zgoda i historia nie są importowane.",
+  backupError: "Nieprawidłowy plik ustawień lub folder. Nic nie zmieniono.", imported: "Wczytano do formularza. Sprawdź ustawienia przed zapisaniem.",
+  conditionLabel: "Tylko z tej strony (opcjonalnie)",
+  aboutTitle: "O rozszerzeniu",
+  privacyLink: "Prywatność",
   chatgptFolderLabel: "Folder plików ChatGPT", chatgptFolderHint: "Puste pole: zapisany folder lub systemowe Pobrane. Rozmowy otrzymują osobne podfoldery.",
   chatgptFolderInvalid: "Wybierz folder ChatGPT lub pozostaw pole puste.",
   namesTitle: "Reguły nazw plików",
   chatgptToggleLabel: "Reguła ChatGPT",
   addName: "+ Dodaj wzorzec", namesEmpty: "Nie dodano reguł nazw.",
   pattern: "Wzorzec nazwy", enabled: "Włączona", up: "Przenieś wyżej", down: "Przenieś niżej",
-  previewLabel: "Sprawdź nazwę pliku",
-  previewNone: "Brak dopasowania",
   invalidName: "Podaj wzorzec (do 255 znaków, bez ścieżki) i pełną ścieżkę folderu dla każdej reguły nazwy.",
   subtitle: "Zapisuj pliki z wybranych portali dokładnie tam, gdzie chcesz.",
   languageLabel: "Język",
@@ -42,17 +49,24 @@ pl: {
   save: "Zapisz ustawienia",
   saved: "Ustawienia zapisane.",
   invalid: "Uzupełnij poprawną domenę i pełną ścieżkę folderu dla każdej pozycji.",
-  hostError: "Najpierw zainstaluj ChatGPT Workspace Setup 1.2.3, aby wybierać foldery."
+  hostError: "Sprawdź zgodę w sekcji Prywatność i zainstaluj DownloadLens Support."
 },
 en: {
+  supportTitle: "Support component — Windows", supportDescription: "Required to route files to your chosen folders. It also adds ZIP actions and updates file locations in Firefox’s download panel.", supportDownload: "Download Windows installer", supportNote: "The installer is hosted on GitHub. If support already works, you do not need to reinstall it. See Privacy for integration details.",
+  advancedTitle: "Advanced", priorityTitle: "Rule order", priorityHint: "The first matching rule wins. Changing this order is optional.",
+  templateHint: "Folder variables: {domain}, {year}, {month}.", resetPriority: "Restore default order",
+  backupTitle: "Settings backup", exportSettings: "Export…", importSettings: "Import…", confirmImport: "Load into form", cancelImport: "Cancel",
+  importReady: "Rules to load: ", importWarning: ". They replace the form. Check folders, then Save settings. Consent and history are not imported.",
+  backupError: "Invalid settings file or folder. Nothing was changed.", imported: "Loaded into the form. Review settings before saving.",
+  conditionLabel: "Only from this website (optional)",
+  aboutTitle: "About the extension",
+  privacyLink: "Privacy",
   chatgptFolderLabel: "ChatGPT downloads folder", chatgptFolderHint: "Leave blank to use the saved folder or Windows Downloads. Each conversation gets its own subfolder.",
   chatgptFolderInvalid: "Choose a ChatGPT folder or leave it blank.",
   namesTitle: "Filename rules",
   chatgptToggleLabel: "ChatGPT rule",
   addName: "+ Add pattern", namesEmpty: "No filename rules yet.",
   pattern: "Filename pattern", enabled: "Enabled", up: "Move up", down: "Move down",
-  previewLabel: "Test a filename",
-  previewNone: "No match",
   invalidName: "Enter a pattern (up to 255 characters, no path) and a full folder path for every filename rule.",
   subtitle: "Save files from selected websites exactly where you want them.",
   languageLabel: "Language",
@@ -79,7 +93,7 @@ en: {
   save: "Save settings",
   saved: "Settings saved.",
   invalid: "Enter a valid domain and a full folder path for every route.",
-  hostError: "Install ChatGPT Workspace Setup 1.2.3 before choosing folders."
+  hostError: "Review your consent in Privacy and install DownloadLens Support."
 }
 };
 
@@ -90,11 +104,16 @@ const emptyElement = document.querySelector("#emptyState");
 const statusElement = document.querySelector("#status");
 
 function applyText() {
+  for (const id of ["supportTitle", "supportDescription", "supportDownload", "supportNote"]) document.getElementById(id).textContent = text[id];
+  for (const id of ["advancedTitle", "priorityTitle", "priorityHint", "templateHint", "resetPriority", "backupTitle", "exportSettings", "importSettings", "confirmImport", "cancelImport"]) document.getElementById(id).textContent = text[id];
+  document.getElementById("aboutTitle").textContent = text.aboutTitle;
+  document.querySelector(".about-links").setAttribute("aria-label", text.aboutTitle);
+  document.getElementById("privacyLink").textContent = text.privacyLink;
   for (const id of ["chatgptFolderLabel", "chatgptFolderHint"]) document.getElementById(id).textContent = text[id];
   document.getElementById("chatgptBrowse").textContent = text.browse;
-  for (const id of ["namesTitle", "chatgptToggleLabel", "addName", "namesEmpty", "previewLabel"]) document.getElementById(id).textContent = text[id];
+  for (const id of ["namesTitle", "chatgptToggleLabel", "addName", "namesEmpty"]) document.getElementById(id).textContent = text[id];
   for (const row of document.querySelectorAll(".name-rule")) translateNameRow(row);
-  updatePreview();
+  refreshRuleControls();
   for (const id of ["subtitle", "languageLabel", "chatgptTitle", "chatgptDescription", "routesTitle", "routesDescription", "diagnosticsTitle", "versionLabel", "activityLabel", "addRoute", "emptyState", "save"]) {
     document.querySelector("#" + id).textContent = text[id];
   }
@@ -107,6 +126,7 @@ function applyText() {
     row.querySelector(".remove").title = text.remove;
   }
   renderActivity();
+  renderPriorities();
 }
 
 let currentActivity = null;
@@ -145,6 +165,7 @@ function refreshEmptyState() {
 
 function addRoute(route = {}) {
   const row = document.querySelector("#routeTemplate").content.firstElementChild.cloneNode(true);
+  row.dataset.id = route.id || crypto.randomUUID();
   row.querySelector(".domainLabel").textContent = text.domain;
   row.querySelector(".folderLabel").textContent = text.folder;
   row.querySelector(".domain").value = route.domain || "";
@@ -154,7 +175,7 @@ function addRoute(route = {}) {
   browse.addEventListener("click", async () => {
     statusElement.textContent = "";
     try {
-      const response = await api.runtime.sendNativeMessage(HOST, {
+      const response = await RouterPrivacy.send(HOST, {
         action: "chooseFolder",
         initialFolder: row.querySelector(".folder").value
       });
@@ -166,35 +187,40 @@ function addRoute(route = {}) {
   const remove = row.querySelector(".remove");
   remove.setAttribute("aria-label", text.remove);
   remove.title = text.remove;
-  remove.addEventListener("click", () => { row.remove(); refreshEmptyState(); });
+  remove.addEventListener("click", () => { row.remove(); refreshEmptyState(); renderPriorities(); });
+  row.addEventListener("input", renderPriorities);
   routesElement.append(row);
   refreshEmptyState();
+  renderPriorities();
 }
 
 async function save() {
   const chatgptFolder = document.querySelector("#chatgptFolder").value.trim();
-  if (chatgptFolder && !/^[a-z]:\\/i.test(chatgptFolder)) { statusElement.textContent = text.chatgptFolderInvalid; return; }
+  if (!LensRules.validFolder(chatgptFolder, true)) { statusElement.textContent = text.chatgptFolderInvalid; return; }
   const filenameRules = readNameRules();
-  if (!filenameRules.every(rule => rule.pattern && rule.pattern.length <= 255 && !/[\\/:]/.test(rule.pattern) && /^[a-z]:\\/i.test(rule.folder))) {
+  if (!filenameRules.every(rule => rule.pattern && rule.pattern.length <= 255 && !/[\\/:]/.test(rule.pattern) && LensRules.validFolder(rule.folder))) {
     statusElement.textContent = text.invalidName;
     return;
   }
   const routes = [...routesElement.querySelectorAll(".route")].map(row => ({
+    id: row.dataset.id,
     domain: normalizeDomain(row.querySelector(".domain").value),
-    folder: row.querySelector(".folder").value.trim().replace(/[\\/]+$/, "")
+    folder: row.querySelector(".folder").value.trim()
   }));
-  const valid = routes.every(route => route.domain && /^[a-z]:\\/i.test(route.folder));
+  const valid = routes.every(route => route.domain && LensRules.validFolder(route.folder));
   if (!valid) {
     statusElement.textContent = text.invalid;
     return;
   }
-  await api.storage.local.set({ routes, filenameRules, chatgptFolder, chatgptEnabled: document.querySelector("#chatgptEnabled").checked, language: document.querySelector("#language").value });
+  try {
+    await api.storage.local.set(LensRules.validate({ routes, filenameRules, chatgptFolder, chatgptEnabled: document.querySelector("#chatgptEnabled").checked, language: document.querySelector("#language").value, ruleOrder: currentOrder() }));
+  } catch (_) { statusElement.textContent = text.backupError; return; }
   statusElement.textContent = text.saved;
 }
 
 async function refreshFolderSuggestions() {
   try {
-    const defaults = await api.runtime.sendNativeMessage(HOST, {action: "defaultFolders"});
+    const defaults = await RouterPrivacy.send(HOST, {action: "defaultFolders"});
     if (defaults && defaults.ok) {
       if (typeof defaults.chatgpt === "string" && defaults.chatgpt) {
         document.querySelector("#chatgptFolder").placeholder = defaults.chatgpt;
@@ -208,7 +234,12 @@ async function refreshFolderSuggestions() {
 }
 
 async function restore() {
-  const settings = await api.storage.local.get({ routes: [], filenameRules: [], chatgptFolder: "", chatgptEnabled: true, language: "auto", lastActivity: null });
+  const settings = LensRules.normalize(await api.storage.local.get({ ...LensRules.defaults, lastActivity: null }));
+  fillSettings(settings);
+  void refreshFolderSuggestions();
+}
+function fillSettings(settings) {
+  priorityOrder = settings.ruleOrder || [];
   document.querySelector("#chatgptFolder").value = settings.chatgptFolder;
   routesElement.replaceChildren();
   document.querySelector("#nameRules").replaceChildren();
@@ -220,30 +251,31 @@ async function restore() {
   settings.routes.forEach(addRoute);
   settings.filenameRules.forEach(addNameRule);
   refreshEmptyState();
-  // Optional native hints must never delay loading saved settings or language.
-  void refreshFolderSuggestions();
+  renderPriorities();
 }
 
 function readNameRules() {
   return [...document.querySelectorAll(".name-rule")].map(row => ({
+    id: row.dataset.id,
+    domain: normalizeDomain(row.querySelector(".condition-domain").value),
     pattern: row.querySelector(".domain").value.trim(),
     folder: row.querySelector(".folder").value.trim(),
     enabled: row.querySelector(".enabled").checked
   }));
 }
-function updatePreview() {
+function refreshRuleControls() {
   const rules = readNameRules();
   document.querySelector("#namesEmpty").hidden = rules.length > 0;
-  const filename = document.querySelector("#previewName").value;
-  const match = filename && matchingFilenameRule(filename, rules);
-  document.querySelector("#previewResult").textContent = !filename ? "" : match ? `${match.pattern} → ${match.folder}` : text.previewNone;
   const rows = [...document.querySelectorAll(".name-rule")];
   rows.forEach((row, i) => {
     row.querySelector(".up").disabled = i === 0;
     row.querySelector(".down").disabled = i === rows.length - 1;
   });
+  renderPriorities();
 }
 function translateNameRow(row) {
+  row.querySelector(".rule-advanced summary").textContent = text.advancedTitle;
+  row.querySelector(".condition-label").textContent = text.conditionLabel;
   row.querySelector(".domainLabel").textContent = text.pattern;
   row.querySelector(".folderLabel").textContent = text.folder;
   row.querySelector(".browse").textContent = text.browse;
@@ -256,6 +288,13 @@ function translateNameRow(row) {
 function addNameRule(rule = {}) {
   const row = document.querySelector("#routeTemplate").content.firstElementChild.cloneNode(true);
   row.classList.add("name-rule");
+  row.dataset.id = rule.id || crypto.randomUUID();
+  const advanced = document.createElement("details"); advanced.className = "rule-advanced";
+  const summary = document.createElement("summary");
+  const condition = document.createElement("label");
+  const conditionLabel = document.createElement("span"); conditionLabel.className = "condition-label";
+  const domainInput = document.createElement("input"); domainInput.className = "condition-domain"; domainInput.placeholder = "example.com"; domainInput.value = rule.domain || "";
+  condition.append(conditionLabel, domainInput); advanced.append(summary, condition); row.append(advanced);
   row.querySelector(".domain").value = rule.pattern || "";
   row.querySelector(".domain").placeholder = "*.zip";
   row.querySelector(".domain").maxLength = 255;
@@ -270,34 +309,39 @@ function addNameRule(rule = {}) {
   for (const [key, symbol] of [["up", "↑"], ["down", "↓"]]) {
     const button = document.createElement("button"); button.type = "button"; button.className = key + " secondary"; button.textContent = symbol;
     button.addEventListener("click", () => {
+      const neighbor = key === "up" ? row.previousElementSibling : row.nextElementSibling;
+      if (neighbor && priorityOrder.length) {
+        const ids = LensRules.entries(draftSettings()).map(r => r.id);
+        const a = ids.indexOf(row.dataset.id), b = ids.indexOf(neighbor.dataset.id);
+        [ids[a], ids[b]] = [ids[b], ids[a]]; priorityOrder = ids;
+      }
       if (key === "up" && row.previousElementSibling) row.previousElementSibling.before(row);
       if (key === "down" && row.nextElementSibling) row.nextElementSibling.after(row);
-      updatePreview();
+      refreshRuleControls();
     });
     controls.append(button);
   }
   row.append(controls);
-  row.querySelector(".remove").addEventListener("click", () => { row.remove(); updatePreview(); });
+  row.querySelector(".remove").addEventListener("click", () => { row.remove(); refreshRuleControls(); });
   row.querySelector(".browse").addEventListener("click", async () => {
     try {
-      const result = await api.runtime.sendNativeMessage(HOST, {action: "chooseFolder", initialFolder: row.querySelector(".folder").value});
+      const result = await RouterPrivacy.send(HOST, {action: "chooseFolder", initialFolder: row.querySelector(".folder").value});
       if (!result || !result.ok) throw new Error();
       if (result.folder) row.querySelector(".folder").value = result.folder;
-      updatePreview();
+      refreshRuleControls();
     } catch (_) { statusElement.textContent = text.hostError; }
   });
-  row.addEventListener("input", updatePreview);
+  row.addEventListener("input", refreshRuleControls);
   translateNameRow(row);
   document.querySelector("#nameRules").append(row);
-  updatePreview();
+  refreshRuleControls();
 }
 document.querySelector("#addName").addEventListener("click", () => addNameRule());
-document.querySelector("#previewName").addEventListener("input", updatePreview);
 document.querySelector("#addRoute").addEventListener("click", () => addRoute());
 document.querySelector("#chatgptBrowse").addEventListener("click", async () => {
   try {
     const field = document.querySelector("#chatgptFolder");
-    const result = await api.runtime.sendNativeMessage(HOST, {action:"chooseFolder", initialFolder:field.value});
+    const result = await RouterPrivacy.send(HOST, {action:"chooseFolder", initialFolder:field.value});
     if (!result || !result.ok) throw new Error();
     if (result.folder) field.value = result.folder;
   } catch (_) { statusElement.textContent = text.hostError; }
@@ -307,4 +351,72 @@ document.querySelector("#language").addEventListener("change", event => selectTr
 if (api.storage.onChanged) api.storage.onChanged.addListener(changes => {
   if (changes.lastActivity) { currentActivity = changes.lastActivity.newValue; renderActivity(); }
 });
+let priorityOrder = [];
+let pendingImport = null;
+function draftSettings() {
+  return { filenameRules: readNameRules(), routes: [...routesElement.children].map(row => ({ id: row.dataset.id, domain: normalizeDomain(row.querySelector(".domain").value), folder: row.querySelector(".folder").value.trim() })),
+    chatgptEnabled: document.querySelector("#chatgptEnabled").checked, chatgptFolder: document.querySelector("#chatgptFolder").value.trim(), language: document.querySelector("#language").value || "auto", ruleOrder: priorityOrder };
+}
+function currentOrder() {
+  const ids = LensRules.entries({ ...draftSettings(), ruleOrder: [] }).map(r => r.id);
+  return priorityOrder.filter(id => ids.includes(id));
+}
+function renderPriorities() {
+  const target = document.querySelector("#priorityRules");
+  target.replaceChildren();
+  const entries = LensRules.entries(draftSettings());
+  entries.forEach((rule, index) => {
+    const row = document.createElement("div"); row.className = "priority-row";
+    const name = document.createElement("span"); name.textContent = `${index + 1}. ${rule.kind === "chatgpt" ? "ChatGPT" : rule.pattern || rule.domain || "…"}${rule.kind === "name" && rule.domain ? " · " + rule.domain : ""}${rule.enabled === false ? " (–)" : ""}`;
+    row.append(name);
+    for (const [key, step, symbol] of [["up", -1, "↑"], ["down", 1, "↓"]]) {
+      const button = document.createElement("button"); button.type = "button"; button.className = "secondary"; button.textContent = symbol; button.title = text[key]; button.setAttribute("aria-label", text[key]);
+      button.disabled = index + step < 0 || index + step >= entries.length;
+      button.addEventListener("click", () => {
+        priorityOrder = entries.map(r => r.id);
+        [priorityOrder[index], priorityOrder[index + step]] = [priorityOrder[index + step], priorityOrder[index]];
+        refreshRuleControls();
+      });
+      row.append(button);
+    }
+    target.append(row);
+  });
+}
+document.querySelector("#resetPriority").addEventListener("click", () => { priorityOrder = []; refreshRuleControls(); });
+document.querySelector("#chatgptEnabled").addEventListener("change", refreshRuleControls);
+document.querySelector("#chatgptFolder").addEventListener("input", refreshRuleControls);
+document.querySelector("#exportSettings").addEventListener("click", () => {
+  const status = document.querySelector("#backupStatus");
+  try {
+    const settings = LensRules.validate({ ...draftSettings(), ruleOrder: currentOrder() });
+    const blob = new Blob([JSON.stringify({ format: "DownloadLens", version: 1, settings }, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a"); link.href = url; link.download = "DownloadLens-settings.json"; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+    status.textContent = "";
+  } catch (_) { status.textContent = text.backupError; }
+});
+document.querySelector("#importSettings").addEventListener("click", () => document.querySelector("#importFile").click());
+document.querySelector("#importFile").addEventListener("change", async event => {
+  const file = event.target.files[0];
+  event.target.value = "";
+  pendingImport = null; document.querySelector("#importReview").hidden = true;
+  if (!file) return;
+  try {
+    if (file.size > 1024 * 1024) throw new Error();
+    const data = JSON.parse(await file.text());
+    if (data.format !== "DownloadLens" || data.version !== 1) throw new Error();
+    pendingImport = LensRules.validate(data.settings);
+    document.querySelector("#importSummary").textContent = text.importReady + (pendingImport.routes.length + pendingImport.filenameRules.length) + text.importWarning;
+    document.querySelector("#importReview").hidden = false;
+    document.querySelector("#backupStatus").textContent = "";
+  } catch (_) { document.querySelector("#backupStatus").textContent = text.backupError; }
+});
+document.querySelector("#confirmImport").addEventListener("click", () => {
+  if (!pendingImport) return;
+  fillSettings(pendingImport); pendingImport = null;
+  document.querySelector("#importReview").hidden = true;
+  document.querySelector("#backupStatus").textContent = text.imported;
+});
+document.querySelector("#cancelImport").addEventListener("click", () => { pendingImport = null; document.querySelector("#importReview").hidden = true; });
 restore();

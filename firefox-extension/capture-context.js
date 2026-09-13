@@ -1,6 +1,7 @@
 "use strict";
 
-function reportDownloadContext() {
+async function reportDownloadContext() {
+  if (!await RouterPrivacy.allowed()) return;
   browser.runtime.sendMessage({
     type: "download-context",
     hostname: location.hostname,
