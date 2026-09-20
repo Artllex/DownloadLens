@@ -11,7 +11,7 @@ pl: {
   supportTitle: "Komponent wsparcia — Windows", supportDescription: "Jest wymagany do przekierowywania plików do wybranych folderów. Dodaje też obsługę ZIP i aktualizację lokalizacji w panelu pobierania Firefoxa.", supportDownload: "Pobierz instalator Windows", supportNote: "Instalator pobierzesz z GitHuba. Jeśli komponent już działa, nie musisz go ponownie instalować. Szczegóły integracji znajdziesz w sekcji Prywatność.",
   advancedTitle: "Zaawansowane", priorityTitle: "Kolejność reguł", priorityHint: "Pierwsza pasująca reguła wygrywa. Zmiana kolejności jest opcjonalna.",
   templateHint: "W folderach możesz używać: {domain}, {year}, {month}.", resetPriority: "Przywróć standardową kolejność",
-  backupTitle: "Kopia ustawień", exportSettings: "Eksportuj…", importSettings: "Importuj…", confirmImport: "Wczytaj do formularza", cancelImport: "Anuluj",
+  backupTitle: "Kopia konfiguracji", backupDescription: "Zapisz reguły i preferencje do pliku JSON albo wczytaj je na innym komputerze.", exportSettings: "Zapisz do pliku…", importSettings: "Importuj z pliku…", confirmImport: "Wczytaj do formularza", cancelImport: "Anuluj",
   importReady: "Reguły do wczytania: ", importWarning: ". Zastąpią formularz. Sprawdź foldery i kliknij Zapisz ustawienia. Zgoda i historia nie są importowane.",
   backupError: "Nieprawidłowy plik ustawień lub folder. Nic nie zmieniono.", imported: "Wczytano do formularza. Sprawdź ustawienia przed zapisaniem.",
   conditionLabel: "Tylko z tej strony (opcjonalnie)",
@@ -55,7 +55,7 @@ en: {
   supportTitle: "Support component — Windows", supportDescription: "Required to route files to your chosen folders. It also adds ZIP actions and updates file locations in Firefox’s download panel.", supportDownload: "Download Windows installer", supportNote: "The installer is hosted on GitHub. If support already works, you do not need to reinstall it. See Privacy for integration details.",
   advancedTitle: "Advanced", priorityTitle: "Rule order", priorityHint: "The first matching rule wins. Changing this order is optional.",
   templateHint: "Folder variables: {domain}, {year}, {month}.", resetPriority: "Restore default order",
-  backupTitle: "Settings backup", exportSettings: "Export…", importSettings: "Import…", confirmImport: "Load into form", cancelImport: "Cancel",
+  backupTitle: "Configuration backup", backupDescription: "Save rules and preferences to a JSON file, or import them on another computer.", exportSettings: "Save to file…", importSettings: "Import from file…", confirmImport: "Load into form", cancelImport: "Cancel",
   importReady: "Rules to load: ", importWarning: ". They replace the form. Check folders, then Save settings. Consent and history are not imported.",
   backupError: "Invalid settings file or folder. Nothing was changed.", imported: "Loaded into the form. Review settings before saving.",
   conditionLabel: "Only from this website (optional)",
@@ -105,7 +105,7 @@ const statusElement = document.querySelector("#status");
 
 function applyText() {
   for (const id of ["supportTitle", "supportDescription", "supportDownload", "supportNote"]) document.getElementById(id).textContent = text[id];
-  for (const id of ["advancedTitle", "priorityTitle", "priorityHint", "templateHint", "resetPriority", "backupTitle", "exportSettings", "importSettings", "confirmImport", "cancelImport"]) document.getElementById(id).textContent = text[id];
+  for (const id of ["advancedTitle", "priorityTitle", "priorityHint", "templateHint", "resetPriority", "backupTitle", "backupDescription", "exportSettings", "importSettings", "confirmImport", "cancelImport"]) document.getElementById(id).textContent = text[id];
   document.getElementById("aboutTitle").textContent = text.aboutTitle;
   document.querySelector(".about-links").setAttribute("aria-label", text.aboutTitle);
   document.getElementById("privacyLink").textContent = text.privacyLink;

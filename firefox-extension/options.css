@@ -85,6 +85,7 @@ footer { display: flex; align-items: center; justify-content: flex-end; gap: 16p
 .priority-row { display: flex; align-items: center; gap: 8px; margin: 10px 0; }
 .priority-row span { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .backup-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+.backup-card > p { color: var(--muted); margin-top: 8px; }
 #importReview p { margin: 16px 0; }
 
 @media (max-width: 700px) {

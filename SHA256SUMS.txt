@@ -1,3 +1,3 @@
-194b3fb58893581ac7733b6f365eba2834e2ebda36a648936d963a4440305602  DownloadLens-1.3.5.xpi
+782da9634bcda3089c022b61a0c66657d53eabef2a46ae75e2033b61d8b13ab7  DownloadLens-1.3.6.xpi
 466ef4747ffcb56fd3ba7b87194b647f81cd391cf4290d7f697d1826f35794c1  DownloadLens-Support-Setup-1.2.6.exe
-885f25fc53176a2d43319986e678b9e64d9710273e417fe473b8cb2a088f4b68  DownloadLens-1.3.5-review-source.zip
+ed9ddbd691aef2e24bbdfa48540d1d3ef71ed8d6b28ec952814b843d66e0ffe3  DownloadLens-1.3.6-review-source.zip

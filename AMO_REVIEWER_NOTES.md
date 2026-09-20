@@ -1,4 +1,4 @@
-# Mozilla reviewer notes — DownloadLens 1.3.5
+# Mozilla reviewer notes — DownloadLens 1.3.6
 
 Requested channel: public AMO listing. Windows desktop only. Extension ID: `download-router@artllex`. License: MIT. Author: Arkadiusz Pajda (Artllex).
 
@@ -20,7 +20,7 @@ Permissions: contextMenus for the explicit Save to command; downloads to observe
 
 ## Build
 
-The included `firefox-extension` files are the XPI's readable source without preprocessing. On Windows PowerShell run `./Build.ps1` to archive them into `dist/DownloadLens-1.3.5.xpi`.
+The included `firefox-extension` files are the XPI's readable source without preprocessing. On Windows PowerShell run `./Build.ps1` to archive them into `dist/DownloadLens-1.3.6.xpi`.
 
 Support source is included separately under `support`. Build using Windows .NET Framework C# compiler and Inno Setup: `./Build-Support.ps1 -Compiler <path-to-ISCC.exe>`. This compiles the native host and builds the installer. Icons are already supplied; no image generation step is required. `Render-Icons.cjs` is an optional development asset tool, not required for rebuilding the XPI.
 

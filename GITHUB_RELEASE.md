@@ -1,4 +1,6 @@
-# DownloadLens 1.3.5
+# DownloadLens 1.3.6
+
+Adds a dedicated configuration backup section. Export rules and preferences to a JSON file, then import them into DownloadLens on another computer. Consent and download history are deliberately excluded.
 
 Includes DownloadLens Support 1.2.6 with shared AutoConfig v2 for Firefox Enhancements 0.1.18.
 

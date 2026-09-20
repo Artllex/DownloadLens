@@ -67,20 +67,24 @@
         <p id="priorityHint" class="muted"></p>
         <div id="priorityRules"></div>
         <button type="button" id="resetPriority" class="secondary"></button>
-        <h2 id="backupTitle"></h2>
-        <div class="backup-actions">
-          <button type="button" id="exportSettings" class="secondary"></button>
-          <button type="button" id="importSettings" class="secondary"></button>
-          <input id="importFile" type="file" accept=".json,application/json" hidden>
-        </div>
-        <div id="importReview" hidden>
-          <p id="importSummary"></p>
-          <button id="confirmImport" type="button" class="secondary"></button>
-          <button id="cancelImport" type="button" class="secondary"></button>
-        </div>
-        <p id="backupStatus" role="status"></p>
       </div>
     </details>
+
+    <section class="backup-card">
+      <h2 id="backupTitle"></h2>
+      <p id="backupDescription"></p>
+      <div class="backup-actions">
+        <button type="button" id="exportSettings" class="secondary"></button>
+        <button type="button" id="importSettings" class="secondary"></button>
+        <input id="importFile" type="file" accept=".json,application/json" hidden>
+      </div>
+      <div id="importReview" hidden>
+        <p id="importSummary"></p>
+        <button id="confirmImport" type="button" class="secondary"></button>
+        <button id="cancelImport" type="button" class="secondary"></button>
+      </div>
+      <p id="backupStatus" role="status"></p>
+    </section>
 
     <section class="support-card">
       <h2 id="supportTitle"></h2>

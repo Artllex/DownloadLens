@@ -6,7 +6,7 @@ Canonical repository: https://github.com/Artllex/DownloadLens
 
 The legacy extension ID `download-router@artllex`, native-host names and
 AutoConfig ownership markers are intentionally retained for upgrade compatibility.
-They are internal identifiers, not the product name. Previously published 1.3.5
+They are internal identifiers, not the product name. Previously published 1.3.6
 packages retain their original bytes and checksums; their old GitHub links redirect
 to this renamed repository. Source links on the main branch use the new URL.
 
@@ -15,14 +15,14 @@ Filename rules take priority by default; Advanced offers a shared priority order
 Includes PL/EN settings, combined filename/website conditions,
 and a switch for the built-in ChatGPT rule. Existing settings retain their precedence.
 
-## DownloadLens 1.3.5
+## DownloadLens 1.3.6
 
-`dist/DownloadLens-1.3.5.xpi` is unsigned; Mozilla public-listing submission is a separate process. Load temporarily through
+`dist/DownloadLens-1.3.6.xpi` is unsigned; Mozilla public-listing submission is a separate process. Load temporarily through
 Firefox `about:debugging` → This Firefox → Load Temporary Add-on, or reload the
 existing development extension. Do not uninstall the extension just to update it:
 uninstallation removes its stored settings. Existing native support is still required.
 
-Advanced contains a shared rule order and JSON import/export. Import stages changes
+Configuration backup has dedicated, visible Export and Import buttons. Import stages changes
 in the form; review destinations and Save to apply. Consent and activity are excluded.
 Folder paths accept `{domain}`, `{year}` and `{month}`. A filename rule's Advanced
 section can restrict the match to one website (including subdomains).
@@ -52,7 +52,7 @@ Build the support installer with
 
 ## Build and test
 
-Run `Build.ps1` in PowerShell to create `dist/DownloadLens-1.3.5.xpi`.
+Run `Build.ps1` in PowerShell to create `dist/DownloadLens-1.3.6.xpi`.
 Run `node tests/firefox-extension.test.js` and `node tests/filename-rules.test.js`.
 The optional UI test requires Playwright and Microsoft Edge.
 
